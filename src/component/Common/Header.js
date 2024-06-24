@@ -27,8 +27,8 @@ const Header = () => {
                 <Link><p className='font-logoFont text-largeScreenlogoContent max-[980px]:text-smallScreenlogoContent tracking-[2px]'>ShoppersAdda</p></Link>
             </div>
             <div className='font-bodyFont text-largeScreenContent flex justify-end items-center gap-[5px] max-[430px]:gap-[2px] cursor-pointer'>
-                <div className='max-[430px]: hidden'><p>Cart</p></div>
-                <div><MdOutlineShoppingCart /></div>
+                <div className='max-[430px]:hidden'><p>Cart</p></div>
+                <div className='text-[20px]'><MdOutlineShoppingCart /></div>
                 <div><p>0</p></div>
             </div>
         </div>

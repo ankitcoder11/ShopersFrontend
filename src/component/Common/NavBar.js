@@ -18,7 +18,7 @@ const NavBar = () => {
                                         <p className='font-bodyFont text-largeScreenContent max-[430px]:text-smallScreenContent'>{item}</p><MdKeyboardArrowDown />
                                     </div>
                                 </Link>
-                                <div className="hidden group-hover:flex absolute bg-white shadow-md w-[70%] left-[15%] p-[3%]">
+                                <div className="hidden group-hover:flex absolute bg-white z-[1] shadow-md w-[70%] left-[15%] p-[3%]">
                                     <div className='flex justify-between items-center w-full'>
                                         {Categories.map((obj, idx) => {
                                             return (
