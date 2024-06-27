@@ -5,6 +5,8 @@ import Header from './component/Common/Header'
 import NavBar from './component/Common/NavBar'
 import Adv from './component/Common/Adv'
 import Home from './component/Home/Home'
+import Subscribe from './component/Common/Subscribe'
+import Footer from './component/Common/Footer'
 
 const Routing = () => {
     return (
@@ -19,7 +21,10 @@ const Routing = () => {
             </div>
             <Routes>
                 <Route path='/' element={<Home />} />
+                {/* <Route path='/login' element={} /> */}
             </Routes>
+            <Subscribe/>
+            <Footer/>
         </BrowserRouter>
     )
 }

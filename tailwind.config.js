@@ -9,9 +9,10 @@ module.exports = {
         logoFont: ["\"Poetsen One\", sans-serif"],
         bodyFont: ["\"Poppins\", sans-serif"],
         buttonFont: ["\"Raleway\", sans-serif"],
-        headingFont: ["\"Playfair Display\", serif"],
+        // headingFont: ["\"Playfair Display\", serif"],
       },
       colors: {
+        textColour:'#2b2b2b',
         topBarBg: '#000000',
         headerBg: '#ffffff',
       },

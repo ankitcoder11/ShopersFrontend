@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { MdKeyboardArrowDown, MdOutlineShoppingCart } from 'react-icons/md'
 import { RxCross1 } from 'react-icons/rx'
@@ -9,7 +9,7 @@ import { Categories } from '../Common/Data/Categories'
 const NavBarMenu = () => {
     const navList = ['Home', 'Shop', 'Blog', 'Theme Features']
     const [toSearch, setToSearch] = useState('');
-    const { navBarMenu, setNavBarMenu } = useContext(MyContext);
+    const {  setNavBarMenu } = useContext(MyContext);
     const [forClose, setForClose] = useState(true);
     const [shopItem, setShopItem] = useState(false);
     const [subShopItem, setSubShopItem] = useState([
@@ -46,15 +46,15 @@ const NavBarMenu = () => {
     return (
         <div className='fixed w-full h-full bg-black bg-opacity-50 top-0 left-0 right-0 bottom-0'>
             <div className={`w-[36%] min-w-[300px] h-screen text-white text-smallScreenContent bg-white flex flex-col gap-[15px] p-[10px] themeScroll ${forClose ? 'animate-navBarMenuOpen' : 'animate-navBarMenuClose'}`}>
-                <div className='text-black text-[20px] p-[10px] flex justify-end' onClick={() => { setForClose(false); setTimeout(() => { setNavBarMenu(false); }, 500); }}><RxCross1 /></div>
-                <div className='font-bodyFont border flex p-[10px] justify-between text-black cursor-pointer'>
+                <div className='text-textColour text-[20px] p-[10px] flex justify-end' onClick={() => { setForClose(false); setTimeout(() => { setNavBarMenu(false); }, 500); }}><RxCross1 /></div>
+                <div className='font-bodyFont border flex p-[10px] justify-between text-textColour cursor-pointer'>
                     <div className='flex gap-[5px]'>
                         <div><p className='uppercase'>Cart</p></div>
                         <div><p>0</p></div>
                     </div>
                     <div className='text-[20px]'><MdOutlineShoppingCart /></div>
                 </div>
-                <div className='flex flex-col justify-center text-black gap-[10px]'>
+                <div className='flex flex-col justify-center text-textColour gap-[10px]'>
                     {navList.map((item, index) => (
                         item === 'Shop'
                             ?
@@ -92,9 +92,9 @@ const NavBarMenu = () => {
                 </div>
                 <div className='border flex items-center p-[10px] rounded-[5px] gap-[10px] justify-between'>
                     <div className='w-full'>
-                        <input className='w-full outline-none font-bodyFont text-smallScreenContent text-black' type='text' placeholder='Search' onChange={(e) => { setToSearch(e.target.value) }} value={toSearch} />
+                        <input className='w-full outline-none font-bodyFont text-smallScreenContent text-textColour' type='text' placeholder='Search' onChange={(e) => { setToSearch(e.target.value) }} value={toSearch} />
                     </div>
-                    <div className='cursor-pointer text-black'>
+                    <div className='cursor-pointer text-textColour'>
                         <FaSearch />
                     </div>
                 </div>

@@ -21,9 +21,29 @@
     background-clip: content-box;
     background-color: #C1C1C1;
 }
+
 .ankit::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+    width: 0;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
     padding: 0;
     height: 0;
+}
+
+.container-with-dots {
+    width: 80%;
+    margin: auto;
+}
+
+.react-multiple-carousel__arrow--right {
+    right: 0 !important;
+}
+
+.react-multiple-carousel__arrow--left {
+    left: 0 !important;
+}
+.react-multiple-carousel__arrow {
+    min-width: 36px !important;
+    min-height: 36px !important;
 }
