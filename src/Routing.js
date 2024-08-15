@@ -7,6 +7,7 @@ import Adv from './component/Common/Adv'
 import Home from './component/Home/Home'
 import Subscribe from './component/Common/Subscribe'
 import Footer from './component/Common/Footer'
+import Login from './component/Login/Login'
 
 const Routing = () => {
     return (
@@ -21,7 +22,7 @@ const Routing = () => {
             </div>
             <Routes>
                 <Route path='/' element={<Home />} />
-                {/* <Route path='/login' element={} /> */}
+                <Route path='/login' element={<Login/>} />
             </Routes>
             <Subscribe/>
             <Footer/>

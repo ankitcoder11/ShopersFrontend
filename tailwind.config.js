@@ -12,7 +12,7 @@ module.exports = {
         // headingFont: ["\"Playfair Display\", serif"],
       },
       colors: {
-        textColour:'#2b2b2b',
+        textColour: '#2b2b2b',
         topBarBg: '#000000',
         headerBg: '#ffffff',
       },
@@ -27,6 +27,14 @@ module.exports = {
         navBarMenuClose: "navBarMenuClose 0.6s linear",
         arrowRotate: "arrowRotate 0.2s linear",
         arrowRotateBack: "arrowRotateBack 0.2s linear",
+        blueSlider: "blueSlider 2s ease forwards",
+        returnBlueSlider: "returnBlueSlider 2s ease forwards",
+        form: "form 2s ease forwards",
+        formReturn: "formReturn 2s ease forwards",
+        formSecond: "formSecond 2s ease forwards",
+        formSecondReturn: "formSecondReturn 2s ease forwards",
+        loginText: "loginText 2s ease forwards",
+        returnLoginText: "returnLoginText 2s ease forwards",
       },
       keyframes: {
         navBarMenuOpen: {
@@ -76,6 +84,57 @@ module.exports = {
           "80%": { transform: 'rotate(54deg)' },
           "90%": { transform: 'rotate(36deg)' },
           "100%": { transform: 'rotate(18deg)' },
+        },
+        ////////////For Blue Box///////////
+        blueSlider: {
+          from: {
+            right: '-15%'
+          },
+          to: {
+            right: '65%'
+          }
+        },
+        returnBlueSlider: {
+          from: {
+            right: '65%'
+          },
+          to: {
+            right: '-15%'
+          }
+        },
+        ////////////For form Box///////////
+        form: {
+          from: {
+            left: '-50%'
+          },
+          to: {
+            left: '0'
+          }
+        },
+        formReturn: {
+          from: {
+            left: '0'
+          },
+          to: {
+            left: '-50%'
+          }
+        },
+        ////////////For formSecond Box///////////
+        formSecond: {
+          from: {
+            right: '0'
+          },
+          to: {
+            right: '-40%'
+          }
+        },
+        formSecondReturn: {
+          from: {
+            right: '-40%'
+          },
+          to: {
+             right: '0'
+          }
         },
       }
     },
