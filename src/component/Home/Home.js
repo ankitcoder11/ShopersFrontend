@@ -5,7 +5,7 @@ import Category from './Category'
 import ProductSlider from './ProductSlider'
 import BrandsLogo from './BrandsLogo'
 import Banner from './Banner'
-import UseFetchData from '../../utiles/UseFetchData';
+import GetDataApi from '../../utiles/API/GetDataApi'
 
 const Home = () => {
     const [active, setActive] = useState('first');
@@ -23,7 +23,7 @@ const Home = () => {
             button: 'WOMENS'
         },
     ]
-    const trendingProductsData = UseFetchData('https://fashionopolism-galleria.myshopify.com/collections/our-favourites/products.json');
+    const trendingProductsData = GetDataApi('https://fashionopolism-galleria.myshopify.com/collections/our-favourites/products.json');
     return (
         <div className='w-full'>
             <AutoImageSlider />

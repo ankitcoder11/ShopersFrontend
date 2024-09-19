@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import TopBar from './component/Common/TopBar'
 import Header from './component/Common/Header'
 import NavBar from './component/Common/NavBar'
@@ -8,25 +8,29 @@ import Home from './component/Home/Home'
 import Subscribe from './component/Common/Subscribe'
 import Footer from './component/Common/Footer'
 import Login from './component/Login/Login'
+import { Toaster } from 'react-hot-toast'
 
 const Routing = () => {
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login';
     return (
-        <BrowserRouter>
-            <div className='flex flex-col gap-[15px] relative'>
+        <>
+            <Toaster />
+            {!isLoginPage && <div className='flex flex-col gap-[15px] relative'>
                 <TopBar />
                 <div className='bg-headerBg flex flex-col gap-[15px]'>
                     <Header />
                     <NavBar />
                     <Adv />
                 </div>
-            </div>
+            </div>}
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/login' element={<Login/>} />
+                <Route path='/login' element={<Login />} />
             </Routes>
-            <Subscribe/>
-            <Footer/>
-        </BrowserRouter>
+            {!isLoginPage && <Subscribe />}
+            {!isLoginPage && <Footer />}
+        </>
     )
 }
 

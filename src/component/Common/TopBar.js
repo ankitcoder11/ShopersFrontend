@@ -25,7 +25,7 @@ const TopBar = () => {
           <div onClick={() => val < 1 ? setVal(val + 1) : setVal(0)} className='text-[25px] max-[430px]:text-[20px] cursor-pointer'><MdKeyboardArrowRight /></div>
         </div>
         <div className='max-[980px]:hidden font-bodyFont text-[14px] flex justify-end'>
-          <Link to="/login" className='hover:scale-105 transition ease-linear duration-150 w-min cursor-pointer hover:bg-white hover:text-black rounded-[5px] p-[5px]'>Login/Signup</Link>
+          <Link to="/login" className='hover:scale-105 transition ease-linear duration-500 w-min cursor-pointer hover:bg-white hover:text-black rounded-[5px] p-[5px]'>Login/Signup</Link>
         </div>
       </div>
     </div>
