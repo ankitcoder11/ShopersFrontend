@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Routing from './Routing';
 import MyContextProvider from './component/contextApi/MyContextProvider';
+import Routing from './Routing/Routing';
 
 function App() {
   return (
