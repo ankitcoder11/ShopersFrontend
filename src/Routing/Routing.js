@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast'
 import Cookies from 'js-cookie';
 import ProtectedRoute from './ProtectedRoute'
 import RoleBasedRoute from './RoleBasedRoute'
+import CreateProducts from '../component/Admin/CreateProducts'
 
 const Routing = () => {
     const location = useLocation();
@@ -42,13 +43,14 @@ const Routing = () => {
                     }
                 />
                 <Route
-                    path='/admin'
+                    path='/admin/createproduct'
                     element={
                         <RoleBasedRoute isAuthenticated={isAuthenticated} isAdmin={isAdmin}>
-                            {/* Admin Component goes here */}
+                            <CreateProducts />
                         </RoleBasedRoute>
                     }
                 />
+                <Route path='/mens' element={<Login />} />
             </Routes>
             {!isLoginPage && <Subscribe />}
             {!isLoginPage && <Footer />}

@@ -47,15 +47,15 @@ const TopBar = () => {
             <div className='relative p-[5px] bg-white rounded-full cursor-pointer group'>
               <div className='text-[20px] text-black'><CiUser /></div>
               <div className='absolute text-[20px] hidden group-hover:flex'><IoMdArrowDropup /></div>
-              <div className='absolute text-black w-[200px] bg-white right-0 top-[37px] p-[10px] hidden group-hover:flex items-center flex-col gap-[10px]'>
+              <div className='absolute text-black w-[200px] bg-white right-0 top-[37px] p-[10px] hidden group-hover:flex items-center flex-col gap-[10px] shadow-xl'>
                 <div>Hello {user?.fullName}</div>
                 <div className='flex justify-between w-full'>
                   <div className={`z-[1] cursor-pointer border uppercase text-[14px] flex justify-center h-max items-center font-bodyFont font-medium py-[5px] px-[10px] w-max rounded-full text-white bg-black`} onClick={handleLogout}>
                     Logout
                   </div>
-                  {user?.email === 'ankit@gmail.com' && <div className={`z-[1] cursor-pointer border uppercase text-[14px] flex justify-center h-max items-center font-bodyFont font-medium py-[5px] px-[10px] w-max rounded-full text-white bg-black`}>
+                  {user?.email === 'ankit@gmail.com' && <Link to={'/admin/createproduct'}><div className={`z-[1] cursor-pointer border uppercase text-[14px] flex justify-center h-max items-center font-bodyFont font-medium py-[5px] px-[10px] w-max rounded-full text-white bg-black`}>
                     Admin
-                  </div>}
+                  </div></Link>}
                 </div>
               </div>
             </div>
