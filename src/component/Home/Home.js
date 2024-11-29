@@ -14,13 +14,15 @@ const Home = () => {
             url: 'https://fashionopolism-galleria.myshopify.com/cdn/shop/files/gallerie-006.jpg?v=1614313156&width=1200',
             category: 'MENS',
             para: 'View our extensive range',
-            button: 'mens'
+            button: 'mens',
+            link: '/mens'
         },
         {
             url: 'https://fashionopolism-galleria.myshopify.com/cdn/shop/files/gallerie-007.jpg?v=1614313156&width=700',
             category: 'WOMENS',
             para: 'Classic looks and elegant styles',
-            button: 'WOMENS'
+            button: 'WOMENS',
+            link: 'womens'
         },
     ]
     const trendingProductsData = GetDataApi('https://fashionopolism-galleria.myshopify.com/collections/our-favourites/products.json');
@@ -30,7 +32,7 @@ const Home = () => {
             <AdvHome />
             <div className='flex justify-center max-[500px]:flex-col p-[20px] gap-[20px]'>
                 {CategoryData.map((item, index) => (
-                    <Category key={index} url={item.url} category={item.category} para={item.para} button={item.button} />
+                    <Category key={index} url={item.url} category={item.category} para={item.para} button={item.button} link={item.link} />
                 ))
                 }
             </div>
