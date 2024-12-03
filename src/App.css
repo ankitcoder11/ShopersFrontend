@@ -47,3 +47,20 @@
     min-width: 36px !important;
     min-height: 36px !important;
 }
+
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Adjust to control the distance from the text */
+    left: 0;
+    width: 0;
+    height: 2px; /* Thickness of the line */
+    background-color: black; /* Line color */
+    transition: width 0.3s ease-in-out; /* Animation effect */
+    z-index: 0;
+}
+
+.nav-item:hover::after {
+    width: 100%; /* Line grows to full width on hover */
+}

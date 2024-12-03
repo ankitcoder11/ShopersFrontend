@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { Categories } from '../Common/Data/Categories';
 import GetDataApi from '../../utiles/API/GetDataApi';
-import AllProductsGrid from '../../utiles/AllProductsGrid';
+import SingleProduct from '../Products Showing pages/SingleProduct';
+import Loader from '../../utiles/Loader';
 
-const AllProducts = () => {
-    // State for main category and subcategory
-    const [selected, setSelected] = useState({ main: 'Mens Fashion', sub: 'Watches' });
-    const [callApi, setCallApi] = useState('mens');
-    const [data, setData] = useState();
-
-    // Function to handle main category click
+const ProductsAdmin = () => {
+    const [selected, setSelected] = useState({
+        main: Categories[0]?.main?.title,
+        sub: Categories[0]?.list[0]?.title,
+    });
+    const [callApi, setCallApi] = useState(Categories[0]?.main?.title.split(" ", 1)[0].toLowerCase());
+    // Handle main category click
     const handleMainCategoryClick = (mainCategory) => {
+        const selectedCategory = Categories.find((cat) => cat.main.title === mainCategory);
         setSelected({
             main: mainCategory,
-            sub: Categories.find((cat) => cat.title === mainCategory)?.list[0] || '', // Default to the first subcategory
+            sub: selectedCategory?.list[0]?.title || '', // Default to the first subcategory
         });
     };
-    // Function to handle subcategory click
+
+    // Handle subcategory click
     const handleSubCategoryClick = (mainCategory, subCategory) => {
         setSelected({ main: mainCategory, sub: subCategory });
     };
-    let arr = selected.main.split(" ", 1);
+
     useEffect(() => {
-        setCallApi(arr[0].toLowerCase())
-    }, [arr])
+        const mainCategoryShort = selected.main.split(" ", 1)[0].toLowerCase();
+        setCallApi(mainCategoryShort);
+    }, [selected.main]);
+
     const productsData = GetDataApi(`${process.env.REACT_APP_API_URL}getproduct/get-${callApi}`);
-    console.log(productsData?.data?.data)
-    const filterData = productsData?.data?.data.filter(item => item?.category?.toLowerCase() === selected?.sub?.toLowerCase());
-    console.log(filterData);
+    const filterData = productsData?.data?.data.filter(
+        (item) => item?.category?.toLowerCase() === selected?.sub?.toLowerCase()
+    );
     return (
         <div className="w-full flex gap-[10px]">
             {/* Sidebar */}
@@ -37,30 +42,29 @@ const AllProducts = () => {
                     <div key={idx} className="flex flex-col gap-[10px]">
                         {/* Main Category */}
                         <h1
-                            onClick={() => handleMainCategoryClick(obj.title)}
+                            onClick={() => handleMainCategoryClick(obj?.main?.title)}
                             className={
-                                selected.main === obj.title
+                                selected.main === obj?.main?.title
                                     ? 'font-buttonFont font-bold p-[10px] w-[90%] mx-auto pl-[20px] bg-black rounded-full text-white cursor-pointer'
                                     : 'cursor-pointer font-buttonFont font-bold p-[10px] w-[90%] mx-auto pl-[20px]'
                             }
                         >
-                            {obj.title}
+                            {obj?.main?.title}
                         </h1>
-
                         {/* Sub-Categories */}
                         <div className="flex flex-col w-[100%]">
                             {obj.list.map((subObj, subIdx) => (
                                 <div className="flex" key={subIdx}>
                                     <div className="w-[20%]"></div>
                                     <p
-                                        onClick={() => handleSubCategoryClick(obj.title, subObj)}
+                                        onClick={() => handleSubCategoryClick(obj?.main?.title, subObj?.title)}
                                         className={
-                                            selected.main === obj.title && selected.sub === subObj
+                                            selected.main === obj.main.title && selected.sub === subObj?.title
                                                 ? 'cursor-pointer font-bodyFont text-largeScreenContent bg-gray-300 p-[10px] pl-[20px] w-[75%] rounded-full'
                                                 : 'cursor-pointer font-bodyFont text-largeScreenContent p-[10px] pl-[20px] w-[75%] rounded-full'
                                         }
                                     >
-                                        {subObj}
+                                        {subObj?.title}
                                     </p>
                                 </div>
                             ))}
@@ -70,12 +74,16 @@ const AllProducts = () => {
             </div>
             {/* Main Content */}
             <div className="w-[80%] py-[20px]">
-                {/* <h1 className="text-[25px] font-bold">{selected.main}</h1>
-                <h2 className="text-[20px]">{selected.sub}</h2> */}
-                <AllProductsGrid data={filterData} />
+                {productsData?.isLoading ? <Loader /> :
+                    <div className="flex gap-[20px] flex-wrap">
+                        {filterData?.map((item, index) => (
+                            <SingleProduct key={index} index={index} data={item} />
+                        ))}
+                    </div>
+                }
             </div>
         </div>
     );
 };
 
-export default AllProducts;
+export default ProductsAdmin;

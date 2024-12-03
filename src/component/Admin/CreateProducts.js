@@ -3,7 +3,7 @@ import { ImageInputComponent, NumberInputComponent, SelectInputComponent, TextAr
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { CiCircleRemove } from 'react-icons/ci';
-import LoginButtonComponent from '../CommonUtiles/LoginButtonComponent';
+import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 const formikSchema = Yup.object().shape({
@@ -23,6 +23,7 @@ const CreateProducts = () => {
         formData.append('name', values.name);
         formData.append('description', values.description);
         formData.append('category', values.subcategory);
+        formData.append('mainCategory', values.category);
         formData.append('price', values.price);
         formData.append('stock', values.stock);
         selectedImages.forEach((image) => {
@@ -42,9 +43,9 @@ const CreateProducts = () => {
         }
     }
     const category = [
-        { name: 'Men', value: 'men' },
-        { name: 'Women', value: 'women' },
-        { name: 'Electronic', value: 'electronic' }
+        { name: 'Men', value: 'mens' },
+        { name: 'Women', value: 'womens' },
+        { name: 'Electronic', value: 'electronics' }
     ]
     const subcategory = {
         men: [
@@ -62,7 +63,7 @@ const CreateProducts = () => {
             ],
         electronic:
             [
-                { name: 'Smart Watches', value: 'smart-watches' },
+                { name: 'Smart Watches', value: 'smart watches' },
                 { name: 'Laptops', value: 'laptops' },
                 { name: 'Mobiles', value: 'mobiles' },
             ],

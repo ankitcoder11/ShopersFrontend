@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CiLock, CiMail, CiMobile1, CiUser } from 'react-icons/ci'
-import InputLoginComponent, { InputPasswordComponent } from '../CommonUtiles/InputLoginComponent';
-import LoginButtonComponent from '../CommonUtiles/LoginButtonComponent';
+import InputLoginComponent, { InputPasswordComponent } from '../LoginInputs/InputLoginComponent';
+import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';

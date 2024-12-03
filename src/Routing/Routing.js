@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import TopBar from '../component/Common/TopBar'
 import Header from '../component/Common/Header'
@@ -13,11 +13,14 @@ import Cookies from 'js-cookie';
 import ProtectedRoute from './ProtectedRoute'
 import RoleBasedRoute from './RoleBasedRoute'
 import CreateProducts from '../component/Admin/CreateProducts'
-import MensHome from '../component/Mens/MensHome'
-import ElectronicsHome from '../component/Electronics/ElectronicsHome'
-import WomensHome from '../component/Womens/WomensHome'
-import AllProducts from '../component/Admin/AllProducts'
-
+import Products from '../component/Products Showing pages/Products'
+import ProductsAdmin from '../component/Admin/ProductsAdmin'
+import SubProducts from '../component/Products Showing pages/SubProducts'
+import Dashboard from '../component/Admin/Dashboard'
+import ProductDesc from '../component/Products Showing pages/ProductDesc'
+import { MyContext } from '../component/contextApi/MyContext'
+import ProductEditor from '../component/Admin/ProductEditor'
+import Loader from '../utiles/Loader'
 const LayoutWrapper = ({ children }) => {
     return (
         <>
@@ -35,11 +38,12 @@ const LayoutWrapper = ({ children }) => {
         </>
     );
 };
-
 const Routing = () => {
     const isAuthenticated = Boolean(Cookies.get('accessToken'));
-    const userDetailes = JSON.parse(localStorage.getItem('user'));
-    const isAdmin = Boolean(userDetailes?.email === 'ankit@gmail.com');
+    const { isAdmin, loading } = useContext(MyContext);
+    if (loading) {
+        return <Loader />
+    }
     return (
         <>
             <Toaster />
@@ -58,15 +62,23 @@ const Routing = () => {
                     element={
                         <LayoutWrapper>
                             <Routes>
-                                <Route path="mens" element={<MensHome />} />
-                                {/* <Routes path="mens/:productId" element={<MensProductDetail />} /> */}
-                                <Route path="electronics" element={<ElectronicsHome />} />
-                                <Route path="womens" element={<WomensHome />} />
+                                <Route path="mens" element={<Products />} />
+                                <Route path="mens/:productId/:product" element={<ProductDesc />} />
+                                <Route path="mens/:productId" element={<SubProducts />} />
+
+                                <Route path="electronics" element={<Products />} />
+                                <Route path="electronics/:productId/:product" element={<ProductDesc />} />
+                                <Route path="electronics/:productId" element={<SubProducts />} />
+
+                                <Route path="womens" element={<Products />} />
+                                <Route path="womens/:productId/:product" element={<ProductDesc />} />
+                                <Route path="womens/:productId" element={<SubProducts />} />
+                                <Route path="*" element={<div>Page not found</div>} />
                             </Routes>
+
                         </LayoutWrapper>
                     }
                 />
-                {/* const { productId } = useParams(); */}
                 <Route path="/protected"
                     element={
                         <ProtectedRoute isAuthenticated={isAuthenticated}>
@@ -81,8 +93,10 @@ const Routing = () => {
                         <RoleBasedRoute isAuthenticated={isAuthenticated} isAdmin={isAdmin}>
                             <LayoutWrapper>
                                 <Routes>
+                                    <Route path="dashboard" element={<Dashboard />} />
                                     <Route path="createproduct" element={<CreateProducts />} />
-                                    <Route path="allproducts" element={<AllProducts />} />
+                                    <Route path="products" element={<ProductsAdmin />} />
+                                    <Route path="products/:category/:subcategory/:product" element={<ProductEditor />} />
                                 </Routes>
                             </LayoutWrapper>
                         </RoleBasedRoute>
