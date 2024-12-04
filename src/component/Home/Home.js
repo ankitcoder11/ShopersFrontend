@@ -5,7 +5,7 @@ import Category from './Category'
 import ProductSlider from './ProductSlider'
 import BrandsLogo from './BrandsLogo'
 import Banner from './Banner'
-import GetDataApi from '../../utiles/API/GetDataApi'
+import GetDataApi from '../../utiles/GetDataApi'
 
 const Home = () => {
     const [active, setActive] = useState('first');

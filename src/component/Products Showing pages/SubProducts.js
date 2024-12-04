@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import GetDataApi from '../../utiles/API/GetDataApi';
+import GetDataApi from '../../utiles/GetDataApi';
 import SingleProduct from './SingleProduct';
 import Loader from '../../utiles/Loader';
 

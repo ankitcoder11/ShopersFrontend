@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Categories } from '../Common/Data/Categories';
-import GetDataApi from '../../utiles/API/GetDataApi';
+import GetDataApi from '../../utiles/GetDataApi';
 import SingleProduct from '../Products Showing pages/SingleProduct';
 import Loader from '../../utiles/Loader';
 

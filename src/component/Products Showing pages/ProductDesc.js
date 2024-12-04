@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import GetDataApi from '../../utiles/API/GetDataApi';
+import GetDataApi from '../../utiles/GetDataApi';
 import { CiGlobe } from 'react-icons/ci';
 import SingleProduct from './SingleProduct';
 

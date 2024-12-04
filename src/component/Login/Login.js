@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { CiLock, CiMail, CiMobile1, CiUser } from 'react-icons/ci'
 import InputLoginComponent, { InputPasswordComponent } from '../LoginInputs/InputLoginComponent';
 import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import { Navigate } from 'react-router-dom';
+import { MyContext } from '../contextApi/MyContext';
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
         .required('Full name is required.')
@@ -38,6 +39,7 @@ const formikLoginSchema = Yup.object().shape({
         .required('New password is required.')
 });
 const Login = () => {
+    const { setIsAdmin } = useContext(MyContext)
     //////////////////////////////////////////////////Loaders////////////////////////////////////////////////
     const [signUpLoading, setSignUpLoading] = useState(false);
     const [loginLoading, setLoginLoading] = useState(false);
@@ -97,6 +99,7 @@ const Login = () => {
             }
             Cookies.set('accessToken', result?.data?.accessToken, { expires: 1 });
             localStorage.setItem('user', JSON.stringify(result?.data?.user))
+            setIsAdmin(result?.data?.user?.email === 'ankit@gmail.com');
             toast.success(result.message);
             formikLogin.resetForm();
             setShowPassword(false)

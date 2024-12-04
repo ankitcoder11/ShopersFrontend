@@ -14,7 +14,7 @@ const MyContextProvider = ({ children }) => {
         setLoading(false);
     }, []);
     return (
-        <MyContext.Provider value={{ navBarMenu, setNavBarMenu, user, isAdmin, loading }}>
+        <MyContext.Provider value={{ navBarMenu, setNavBarMenu, user, isAdmin, setIsAdmin, loading }}>
             {children}
         </MyContext.Provider>
     )

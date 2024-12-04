@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import GetDataApi from '../../utiles/API/GetDataApi';
+import GetDataApi from '../../utiles/GetDataApi';
 import { useLocation } from 'react-router-dom';
 import SingleProduct from './SingleProduct';
 import Loader from '../../utiles/Loader';
