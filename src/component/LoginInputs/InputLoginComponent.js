@@ -8,7 +8,7 @@ const InputLoginComponent = ({ placeholder, icon, name, errors, touched, changeH
                 <div className='text-gray-700'>{icon}</div>
                 <input type='text' placeholder={placeholder} name={name} value={value} onChange={changeHandler}
                     className='bg-gray-100 outline-none text-[14px] w-full ' />
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'> {errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {errors}</p>}
             </div>
         </>
     )
@@ -24,7 +24,7 @@ const InputPasswordComponent = ({ placeholder, icon, name, errors, touched, chan
                 <input type={showPassword ? 'text' : 'password'} placeholder={placeholder} name={name} value={value} onChange={changeHandler} autoComplete={name}
                     className='bg-gray-100 outline-none text-[14px] w-full ' />
                 <p className='text-gray-700 cursor-pointer' onClick={setShowPassword}>{showPassword ? <VscEyeClosed /> : <VscEye />}</p>
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'> {errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {errors}</p>}
             </div>
         </>
     )

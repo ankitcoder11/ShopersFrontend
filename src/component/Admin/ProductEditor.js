@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import GetDataApi from '../../utiles/GetDataApi';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { ImageInputComponent, NumberInputComponent, SelectInputComponent, TextAreaInputComponent, TextInputComponent } from '../../utiles/InputFields';
 import { CiCircleRemove } from 'react-icons/ci';
 import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import * as Yup from 'yup';
+import { fetchProducts, updateProduct } from '../../api/products';
 
 const formikSchema = Yup.object().shape({
   name: Yup.string().required('Product name is required.'),
@@ -15,21 +14,35 @@ const formikSchema = Yup.object().shape({
   subcategory: Yup.string().required('Product sub-category is required.'),
   price: Yup.string().required('Product price is required.'),
   stock: Yup.string().required('Product stock is required.'),
-  // imageUrl: Yup.array().min(1, 'At least one image is required.').required('Product images are required.'),
 });
 
 const ProductEditor = () => {
   const location = useLocation();
+  const [loader, setLoader] = useState(false);
+  const [productsData, setProductsData] = useState();
   const fullPath = location.pathname;
   const arr = fullPath.split('/');
   const mainCategory = arr[3];
   const productID = arr[5];
 
-  const productsData = GetDataApi(`${process.env.REACT_APP_API_URL}getproduct/get-${mainCategory}`);
-  const product = productsData?.data?.data.find((product) => product._id === productID);
+  useEffect(() => {
+    const getData = async () => {
+      setLoader(true)
+      try {
+        const response = await fetchProducts(mainCategory);
+        setProductsData(response?.data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoader(false);
+      }
+    }
+    getData();
+  }, [mainCategory])
+
+  const product = productsData?.find((product) => product._id === productID);
 
   const [selectedImages, setSelectedImages] = useState([]);
-  const [loader, setLoader] = useState(false);
 
   // Update initialValues once the product is loaded
   const [initialValues, setInitialValues] = useState({
@@ -56,7 +69,7 @@ const ProductEditor = () => {
     }
   }, [product]);
 
-  const callApi = async (values) => {
+  const updateProductApi = async (values) => {
     setLoader(true);
     const formData = new FormData();
     formData.append('id', productID);
@@ -72,14 +85,11 @@ const ProductEditor = () => {
       });
     }
     try {
-      const response = await axios.put(`http://localhost:8000/api/v1/createproduct/update`, formData);
-      toast.success(response?.data?.message);
-      formikForm.resetForm();
-      setSelectedImages([]);
-      formikForm.setFieldValue('imageUrl', []);
+      const response = await updateProduct(formData);
+      toast.success(response?.message);
     } catch (error) {
       console.error(error);
-      toast.error('Failed to create product');
+      toast.error('Failed to update product');
     } finally {
       setLoader(false);
     }
@@ -115,7 +125,7 @@ const ProductEditor = () => {
     initialValues,
     enableReinitialize: true,
     validationSchema: formikSchema,
-    onSubmit: (values) => callApi(values),
+    onSubmit: (values) => updateProductApi(values),
   });
 
   const handleRemoveImage = (index) => {
@@ -187,6 +197,16 @@ const ProductEditor = () => {
           />
         </div>
         <div className="w-[35%]">
+          <div className='w-full flex flex-wrap gap-[10px]'>
+            {product?.imageUrl?.map((item, index) => {
+              return (
+                <div key={index} className='w-[48%] h-[200px]'>
+                  <img className='h-full w-full object-cover bg-gray-300' src={item} />
+                </div>
+              )
+            })}
+          </div>
+          <div className='text-[14px] text-red-400 text-center pt-[10px]'>* Your current image will be lost *</div>
           <ImageInputComponent
             label="Product Images"
             setSelectedImages={(files) => {

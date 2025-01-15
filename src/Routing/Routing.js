@@ -21,6 +21,7 @@ import ProductDesc from '../component/Products Showing pages/ProductDesc'
 import { MyContext } from '../component/contextApi/MyContext'
 import ProductEditor from '../component/Admin/ProductEditor'
 import Loader from '../utiles/Loader'
+import CartSideBar from '../component/Common/CartSideBar'
 const LayoutWrapper = ({ children }) => {
     return (
         <>
@@ -47,6 +48,7 @@ const Routing = () => {
     return (
         <>
             <Toaster />
+            <CartSideBar />
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="*"

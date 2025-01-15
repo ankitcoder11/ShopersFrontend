@@ -6,6 +6,8 @@ const MyContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [cartSize, setCartSize] = useState(0);
 
     useEffect(() => {
         const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -14,7 +16,18 @@ const MyContextProvider = ({ children }) => {
         setLoading(false);
     }, []);
     return (
-        <MyContext.Provider value={{ navBarMenu, setNavBarMenu, user, isAdmin, setIsAdmin, loading }}>
+        <MyContext.Provider value={{
+            navBarMenu,
+            setNavBarMenu,
+            user,
+            isAdmin,
+            setIsAdmin,
+            loading,
+            isSidebarOpen,
+            setIsSidebarOpen,
+            cartSize,
+            setCartSize
+        }}>
             {children}
         </MyContext.Provider>
     )

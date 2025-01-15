@@ -4,7 +4,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { CiUser } from 'react-icons/ci';
 import { IoMdArrowDropup } from 'react-icons/io';
@@ -20,7 +20,7 @@ const TopBar = () => {
       const userDetailes = JSON.parse(localStorage.getItem('user'))
       setUser(userDetailes)
     }
-  }, [])
+  }, [token])
   const handleLogout = () => {
     Cookies.remove('accessToken');
     localStorage.removeItem('user')

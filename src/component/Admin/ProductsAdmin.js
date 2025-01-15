@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Categories } from '../Common/Data/Categories';
-import GetDataApi from '../../utiles/GetDataApi';
 import SingleProduct from '../Products Showing pages/SingleProduct';
 import Loader from '../../utiles/Loader';
+import { fetchProducts } from '../../api/products';
 
 const ProductsAdmin = () => {
+    const [productsData, setProductsData] = useState()
+    const [loader, setLoader] = useState(false)
     const [selected, setSelected] = useState({
         main: Categories[0]?.main?.title,
         sub: Categories[0]?.list[0]?.title,
@@ -29,8 +31,21 @@ const ProductsAdmin = () => {
         setCallApi(mainCategoryShort);
     }, [selected.main]);
 
-    const productsData = GetDataApi(`${process.env.REACT_APP_API_URL}getproduct/get-${callApi}`);
-    const filterData = productsData?.data?.data.filter(
+    useEffect(() => {
+        const getData = async () => {
+            setLoader(true)
+            try {
+                const response = await fetchProducts(callApi);
+                setProductsData(response?.data)
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setLoader(false);
+            }
+        }
+        getData();
+    }, [callApi])
+    const filterData = productsData?.filter(
         (item) => item?.category?.toLowerCase() === selected?.sub?.toLowerCase()
     );
     return (
@@ -73,15 +88,17 @@ const ProductsAdmin = () => {
                 ))}
             </div>
             {/* Main Content */}
-            <div className="w-[80%] py-[20px]">
-                {productsData?.isLoading ? <Loader /> :
-                    <div className="flex gap-[20px] flex-wrap">
-                        {filterData?.map((item, index) => (
-                            <SingleProduct key={index} index={index} data={item} />
-                        ))}
-                    </div>
-                }
-            </div>
+            {loader ? <div className='flex w-[80%] items-center justify-center'><Loader /></div> :
+                <div className="w-[80%] py-[20px]">
+                    {productsData?.isLoading ? <Loader /> :
+                        <div className="flex gap-[20px] flex-wrap">
+                            {filterData?.map((item, index) => (
+                                <SingleProduct key={index} index={index} data={item} />
+                            ))}
+                        </div>
+                    }
+                </div>
+            }
         </div>
     );
 };

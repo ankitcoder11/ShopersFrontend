@@ -35,6 +35,8 @@ module.exports = {
         formSecondReturn: "formSecondReturn 2s ease forwards",
         loginText: "loginText 2s ease forwards",
         returnLoginText: "returnLoginText 2s ease forwards",
+        sideBarOpen: "sideBarOpen 0.6s ease-out forwards",
+        sideBarClose: "sideBarClose 0.6s ease-out forwards",
       },
       keyframes: {
         navBarMenuOpen: {
@@ -85,6 +87,15 @@ module.exports = {
           "90%": { transform: 'rotate(36deg)' },
           "100%": { transform: 'rotate(18deg)' },
         },
+        ////////////For Sidebar////////////
+        sideBarOpen: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        sideBarClose: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
         ////////////For Blue Box///////////
         blueSlider: {
           from: {
@@ -133,7 +144,7 @@ module.exports = {
             right: '-40%'
           },
           to: {
-             right: '0'
+            right: '0'
           }
         },
       }

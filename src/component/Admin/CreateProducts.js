@@ -4,8 +4,9 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { CiCircleRemove } from 'react-icons/ci';
 import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import { createProduct } from '../../api/products';
+
 const formikSchema = Yup.object().shape({
     name: Yup.string().required('Product name is required.'),
     category: Yup.string().required('Product category is required.'),
@@ -14,9 +15,11 @@ const formikSchema = Yup.object().shape({
     stock: Yup.string().required('Product stock is required.'),
     imageUrl: Yup.array().min(1, 'At least one image is required.').required('Product images are required.'),
 });
+
 const CreateProducts = () => {
     const [selectedImages, setSelectedImages] = useState([]);
     const [loader, setLoader] = useState(false);
+
     const callApi = async (values) => {
         setLoader(true);
         const formData = new FormData();
@@ -30,44 +33,46 @@ const CreateProducts = () => {
             formData.append('imageUrl', image);
         });
         try {
-            const response = await axios.post(`http://localhost:8000/api/v1/createproduct/${formikForm?.values?.category}`, formData);
-            toast.success(response?.data?.message);
+            const response = await createProduct(formikForm?.values?.category, formData);
+            toast.success(response?.message);
             formikForm?.resetForm();
             setSelectedImages('');
             formikForm.setFieldValue('imageUrl', '');
         } catch (error) {
-            console.error(error);
-
+            console.error(error)
         } finally {
             setLoader(false);
         }
     }
+
     const category = [
         { name: 'Men', value: 'mens' },
         { name: 'Women', value: 'womens' },
         { name: 'Electronic', value: 'electronics' }
     ]
+
     const subcategory = {
-        men: [
+        mens: [
             { name: 'Watches', value: 'watches' },
             { name: 'Shirts', value: 'shirts' },
             { name: 'T- Shirts', value: 't-shirts' },
             { name: 'Shoes', value: 'shoes' },
         ],
-        women:
+        womens:
             [
                 { name: 'Bags', value: 'bags' },
                 { name: 'Tops', value: 'tops' },
                 { name: 'T- Shirts', value: 't-shirts' },
                 { name: 'Shoes', value: 'shoes' },
             ],
-        electronic:
+        electronics:
             [
                 { name: 'Smart Watches', value: 'smart watches' },
                 { name: 'Laptops', value: 'laptops' },
                 { name: 'Mobiles', value: 'mobiles' },
             ],
     }
+
     const formikForm = useFormik({
         initialValues: {
             name: '',
@@ -81,16 +86,18 @@ const CreateProducts = () => {
         validationSchema: formikSchema,
         onSubmit: (values) => callApi(values),
     })
+
     const handleRemoveImage = (index) => {
         const newImages = selectedImages.filter((_, i) => i !== index);
         formikForm.setFieldValue('imageUrl', '')
         setSelectedImages(newImages);
     };
+
     return (
         <form className='w-full flex flex-col items-center justify-center font-bodyFont py-[10px] gap-[10px]'>
             <div className='text-[30px] font-semibold'>Create Product</div>
             <div className='w-[90%] flex gap-[10px]'>
-                <div className='w-[65%] flex flex-col gap-[10px]'>
+                <div className='w-[65%] flex flex-col gap-[15px]'>
                     <TextInputComponent label={'Product Name'} placeholder={'Product Name'} name={'name'} value={formikForm?.values?.name} changeHandler={formikForm.handleChange} errors={formikForm?.errors?.name} touched={formikForm?.touched?.name} />
                     <TextAreaInputComponent label={'Product Description'} placeholder={'Product Description'} name={'description'} value={formikForm?.values?.description} changeHandler={formikForm.handleChange} errors={formikForm?.errors?.description} touched={formikForm?.touched?.description} />
                     <SelectInputComponent label={'Product Category'} name={'category'} options={category} value={formikForm?.values?.category} changeHandler={formikForm.handleChange} errors={formikForm?.errors?.category} touched={formikForm?.touched?.category} />

@@ -1,22 +1,39 @@
-import React, { useEffect } from 'react'
-import GetDataApi from '../../utiles/GetDataApi';
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import SingleProduct from './SingleProduct';
 import Loader from '../../utiles/Loader';
+import { fetchProducts } from '../../api/products';
 
 const Products = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [productsData, setProductsData] = useState()
   const location = useLocation()
   const fullPath = location.pathname;
   const url = fullPath.split('/')
-  const productsData = GetDataApi(`${process.env.REACT_APP_API_URL}getproduct/get-${url[2]}`);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchProducts(url[2]);
+        setProductsData(response?.data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
     <>
-      {productsData?.isLoading ? <Loader /> :
+      {isLoading ? <Loader /> :
         <div className='flex w-[95%] gap-[20px] flex-wrap mx-auto py-[20px]'>
-          {productsData?.data?.data?.map((item, index) => {
+          {productsData?.map((item, index) => {
             return (
               <SingleProduct key={index} index={index} data={item} />
             )

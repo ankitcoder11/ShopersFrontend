@@ -39,7 +39,7 @@ const NavBar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <Link key={index} to={`/${item.toLowerCase()}`} className='relative'>
+                            <Link key={index} to={item === 'Home' ? '/' : `/${item.toLowerCase()}`} className='relative'>
                                 <p className='font-bodyFont text-largeScreenContent max-[430px]:text-smallScreenContent nav-item'>{item}</p>
                             </Link>
                         )

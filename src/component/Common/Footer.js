@@ -2,8 +2,6 @@ import React from 'react'
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
-import { LiaFlagUsaSolid } from "react-icons/lia";
-import { FaDollarSign } from "react-icons/fa";
 import { ReactComponent as VISA } from '../svg/visa.svg';
 import { ReactComponent as MASTER } from '../svg/master.svg';
 import { ReactComponent as AMERICAN } from '../svg/american.svg';

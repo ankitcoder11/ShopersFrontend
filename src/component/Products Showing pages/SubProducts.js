@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import GetDataApi from '../../utiles/GetDataApi';
 import SingleProduct from './SingleProduct';
 import Loader from '../../utiles/Loader';
+import { fetchProducts } from '../../api/products';
 
 const SubProducts = () => {
   const category = useParams();
   const categoryPath = category['*'];
   const mainCategory = categoryPath.split('/')[0];
   const subCategory = category.productId;
-  const productsData = GetDataApi(`${process.env.REACT_APP_API_URL}getproduct/get-${mainCategory}`);
-  const filterData = productsData?.data?.data.filter(
+
+  const [productsData, setProductsData] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchProducts(mainCategory);
+        setProductsData(response?.data)
+        console.log(response?.data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [mainCategory]);
+
+  const filterData = productsData?.filter(
     (item) => item?.category?.toLowerCase() === subCategory?.toLowerCase()
   );
   return (
     <>
-      {productsData?.isLoading ? <Loader /> :
+      {isLoading ? <Loader /> :
         <div className='flex w-[95%] gap-[20px] flex-wrap mx-auto py-[20px] '>
           {filterData?.map((item, index) => {
             return (

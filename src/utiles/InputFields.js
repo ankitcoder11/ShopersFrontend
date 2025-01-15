@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 const TextInputComponent = ({ placeholder, name, errors, touched, changeHandler, value, label }) => {
     return (
@@ -7,7 +6,7 @@ const TextInputComponent = ({ placeholder, name, errors, touched, changeHandler,
             <div className='w-[70%] flex items-center gap-[10px] relative border'>
                 <input type='text' placeholder={placeholder} id={name} name={name} value={value} onChange={changeHandler}
                     className='outline-none text-[14px] w-full p-[10px]' />
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'> {errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {errors}</p>}
             </div>
         </div>
     )
@@ -19,7 +18,7 @@ const NumberInputComponent = ({ placeholder, name, errors, touched, changeHandle
             <div className='w-[70%] flex items-center gap-[10px] relative border'>
                 <input type='number' min={1} max={1999999} placeholder={placeholder} id={name} name={name} value={value} onChange={changeHandler}
                     className='outline-none text-[14px] w-full p-[10px]' />
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'> {errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {errors}</p>}
             </div>
         </div>
     )
@@ -38,7 +37,7 @@ const SelectInputComponent = ({ options, name, errors, touched, changeHandler, v
                         </option>
                     ))}
                 </select>
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'>{errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'>{errors}</p>}
             </div>
         </div>
     );
@@ -50,7 +49,7 @@ const TextAreaInputComponent = ({ placeholder, name, errors, touched, changeHand
             <div className='w-[70%] flex items-center gap-[10px] relative border'>
                 <textarea style={{ resize: 'none' }} type='text' placeholder={placeholder} id={name} name={name} value={value} onChange={changeHandler}
                     className='outline-none text-[14px] w-full h-[80px] p-[10px]' />
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'> {errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {errors}</p>}
             </div>
         </div>
     )
@@ -76,7 +75,7 @@ const ImageInputComponent = ({ label, setSelectedImages, errors, touched }) => {
                     onChange={handleImageChange}
                     className="w-full flex items-center gap-[10px] relative border outline-none text-[14px] p-[10px]"
                 />
-                {errors && touched && <p className='absolute text-[10px] bottom-[-4px] text-red-400'>{errors}</p>}
+                {errors && touched && <p className='absolute text-[10px] bottom-[-12px] text-red-400'>{errors}</p>}
             </div>
         </div>
     );

@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import { Navigate } from 'react-router-dom';
 import { MyContext } from '../contextApi/MyContext';
+import { loginUsers, registerUsers } from '../../api/users';
+
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
         .required('Full name is required.')
@@ -31,6 +33,7 @@ const formikSchema = Yup.object().shape({
         .required('Please confirm your password.')
         .oneOf([Yup.ref('password'), null], 'Passwords must match.')
 });
+
 const formikLoginSchema = Yup.object().shape({
     email: Yup.string()
         .required('Email is required.')
@@ -38,78 +41,71 @@ const formikLoginSchema = Yup.object().shape({
     password: Yup.string()
         .required('New password is required.')
 });
+
 const Login = () => {
     const { setIsAdmin } = useContext(MyContext)
-    //////////////////////////////////////////////////Loaders////////////////////////////////////////////////
+    // Loaders
     const [signUpLoading, setSignUpLoading] = useState(false);
     const [loginLoading, setLoginLoading] = useState(false);
+
     const [showPassword, setShowPassword] = useState(false);
     const [ani, setAni] = useState(false);
+
     const createUser = async (values) => {
-        setSignUpLoading(true);
+        setSignUpLoading(true)
         try {
-            const response = await fetch('http://localhost:8000/api/v1/users/register',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }, body: JSON.stringify({
-                        fullName: values.fullName,
-                        email: values.email,
-                        password: values.password,
-                        mobileNumber: values.mobileNumber
-                    }),
-                }
-            )
-            const result = await response.json();
-            if (!response.ok) {
-                toast.error(result.message);
+            const response = await registerUsers({
+                fullName: values.fullName,
+                email: values.email,
+                password: values.password,
+                mobileNumber: values.mobileNumber
+            });
+            if (response?.statusCode !== 200) {
+                toast.error(response.message);
                 setSignUpLoading(false)
                 return;
             }
-            toast.success(result.message);
+            toast.success(response?.message);
             formikSignup.resetForm();
             setAni(!ani);
             setSignUpLoading(false)
         } catch (error) {
-            toast.error('An unexpected error occurred. Please try again.');
+            toast.error(error.message || 'An unexpected error occurred. Please try again.');
             console.error('Error:', error.message);
+            setSignUpLoading(false)
+        } finally {
             setSignUpLoading(false);
         }
-    }
+    };
+
     const loginUser = async (values) => {
         setLoginLoading(true)
         try {
-            const response = await fetch('http://localhost:8000/api/v1/users/login',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }, body: JSON.stringify({
-                        email: values.email,
-                        password: values.password,
-                    }),
-                }
-            )
-            const result = await response.json();
-            if (!response.ok) {
-                toast.error(result.message);
+            const response = await loginUsers({
+                email: values.email,
+                password: values.password
+            });
+            if (response?.statusCode !== 200) {
+                toast.error(response.message);
                 setLoginLoading(false)
                 return;
             }
-            Cookies.set('accessToken', result?.data?.accessToken, { expires: 1 });
-            localStorage.setItem('user', JSON.stringify(result?.data?.user))
-            setIsAdmin(result?.data?.user?.email === 'ankit@gmail.com');
-            toast.success(result.message);
+            Cookies.set('accessToken', response?.data?.accessToken, { expires: 1 });
+            localStorage.setItem('user', JSON.stringify(response?.data?.user))
+            setIsAdmin(response?.data?.user?.email === 'ankit@gmail.com');
+            toast.success(response.message);
             formikLogin.resetForm();
             setShowPassword(false)
             setLoginLoading(false)
         } catch (error) {
-            toast.error('An unexpected error occurred. Please try again.');
+            toast.error(error.message || 'An unexpected error occurred. Please try again.');
             console.error('Error:', error.message);
             setLoginLoading(false)
+        } finally {
+            setLoginLoading(false);
         }
-    }
+    };
+
     const formikSignup = useFormik({
         initialValues: {
             fullName: '',
@@ -121,6 +117,7 @@ const Login = () => {
         validationSchema: formikSchema,
         onSubmit: (values) => createUser(values),
     })
+
     const formikLogin = useFormik({
         initialValues: {
             email: '',
@@ -129,6 +126,7 @@ const Login = () => {
         validationSchema: formikLoginSchema,
         onSubmit: (values) => loginUser(values),
     })
+
     const token = Cookies.get('accessToken');
     if (token) {
         return <Navigate to="/" />
@@ -138,11 +136,11 @@ const Login = () => {
             <div className='h-[400px] w-[400px] rounded-full absolute bottom-[-100px] left-[-100px] bg-[#808080]'></div>
             <div className='w-0 h-0 border-[#808080] border-l-[250px] border-l-transparent border-r-[250px] border-b-[250px] absolute right-[-20px] top-[-20px] rotate-[-5deg]'></div>
             <div className=' z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
-                {/* //////////////////////////////Sign Up Page///////////////////// */}
+                {/* Sign Up Page */}
                 <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[20px] absolute ${ani ? 'animate-formSecondReturn' : 'animate-formSecond'}`}
                     onSubmit={formikSignup.handleSubmit}>
                     <h1 className='font-logoFont text-[30px] text-black'>Create Account</h1>
-                    <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
+                    <div className='flex items-center w-full justify-center flex-col gap-[15px]'>
                         <InputLoginComponent icon={<CiUser />} placeholder={'Full Name'} name={'fullName'} value={formikSignup?.values?.fullName} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.fullName} touched={formikSignup?.touched?.fullName} />
                         <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikSignup?.values?.email} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.email} touched={formikSignup?.touched?.email} />
                         <InputLoginComponent icon={<CiMobile1 />} placeholder={'Mobile Number'} name={'mobileNumber'} value={formikSignup?.values?.mobileNumber} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.mobileNumber} touched={formikSignup?.touched?.mobileNumber} />
@@ -156,7 +154,7 @@ const Login = () => {
                     <p className='w-[60%] font-bodyFont text-white text-[14px] text-center'>To keep connected with us please login with your personal info</p>
                     <LoginButtonComponent buttonText={'Sign In'} handler={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} textColor={'black'} bg={'white'} />
                 </div>
-                {/*///////////////////////////// Sign in Page//////////////////// */}
+                {/*Sign in Page */}
                 <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full left-[-50%] gap-[20px] absolute ${ani ? 'animate-formReturn' : 'animate-form'}`}
                     onSubmit={formikLogin.handleSubmit}>
                     <h1 className='font-logoFont text-[30px] text-black'>Sign in to Shopper'sAdda</h1>
