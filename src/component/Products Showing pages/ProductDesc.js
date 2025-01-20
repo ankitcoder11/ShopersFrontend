@@ -8,6 +8,8 @@ import { addToCart } from '../../api/cart';
 import { MyContext } from '../contextApi/MyContext';
 import toast from 'react-hot-toast';
 import ButtonLoader from '../../utiles/ButtonLoader';
+import { createOrder, verifyPayment } from '../../api/order';
+import LargeButton from '../../utiles/LargeButton';
 
 const ProductDesc = () => {
     const location = useLocation()
@@ -21,6 +23,7 @@ const ProductDesc = () => {
     const category = arr[2]
     const productId = arr[4];
     const subCategory = arr[3];
+    const [buyNowLoading, setBuyNowLoading] = useState(false);
 
     const { user } = useContext(MyContext);
 
@@ -57,18 +60,85 @@ const ProductDesc = () => {
 
     // Add item to the cart
     const handleAddToCart = async (productId, quantity, mainCategory) => {
-        setAddingItemToCart(true)
-        const userId = user;
-        try {
-            const data = { userId, productId, quantity, mainCategory };
-            const response = await addToCart(data);
-            toast.success(response?.message)
-        } catch (err) {
-            toast.error("Error while adding item to cart")
-        } finally {
-            setAddingItemToCart(false)
+        if (user) {
+            setAddingItemToCart(true)
+            const userId = user;
+            try {
+                const data = { userId, productId, quantity, mainCategory };
+                const response = await addToCart(data);
+                toast.success(response?.message)
+            } catch (err) {
+                toast.error("Error while adding item to cart")
+            } finally {
+                setAddingItemToCart(false)
+            }
+        } else {
+            toast.error("Please login first")
         }
     };
+
+    const handleBuyNow = async () => {
+        if (user) {
+            setBuyNowLoading(true)
+            const orderData = {
+                userId: user,
+                productId: product?._id,
+                quantity: 1,
+                price: product?.price,
+            };
+
+            try {
+                // Step 1: Create order on the backend
+                const response = await createOrder(orderData);
+                if (response.success) {
+                    const { orderId, razorpayOrderId, amount } = response.data;
+
+                    // Step 2: Initiate Razorpay payment
+                    const options = {
+                        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+                        amount: amount.toString(),
+                        currency: 'INR',
+                        name: 'My Store',
+                        description: 'Purchase Product',
+                        order_id: razorpayOrderId,
+                        handler: async (paymentResponse) => {
+                            // Step 3: Verify payment
+                            const verification = await verifyPayment({ ...paymentResponse, orderId });
+
+                            if (verification.success) {
+                                toast.success('Order placed successfully!');
+                            } else {
+                                toast.error('Payment verification failed.');
+                            }
+                        },
+                        prefill: {
+                            name: user.name,
+                            email: user.email,
+                            contact: user.phone,
+                        },
+                        modal: {
+                            ondismiss: () => {
+                                toast.error('Payment was canceled.');
+                            },
+                        }
+                    };
+                    console.log('Razorpay Options:', options);
+                    const razorpay = new window.Razorpay(options);
+                    razorpay.open();
+                } else {
+                    toast.error('Failed to create order. Please try again.');
+                }
+            } catch (error) {
+                toast.error('Error processing your order.');
+                console.error(error);
+            } finally {
+                setBuyNowLoading(false)
+            }
+        } else {
+            toast.error('Please log in to proceed.');
+        }
+    };
+
 
     return (
         <div>
@@ -114,8 +184,17 @@ const ProductDesc = () => {
                                 <div>Low stock - {product?.stock} items left</div>
                             </div>
                         }
-                        <div onClick={() => handleAddToCart(product?._id, 1, product?.mainCategory)} className='p-[13px] text-[13px] text-center border-[1px] border-black cursor-pointer'>{addingItemToCart ? <div className='flex justify-center items-center'><ButtonLoader /></div> : "ADD TO CART"}</div>
-                        <div className='bg-black text-white p-[13px] text-[13px] text-center cursor-pointer'>BUY IT NOW</div>
+                        <LargeButton
+                            isLoading={addingItemToCart}
+                            onClick={() => handleAddToCart(product?._id, 1, product?.mainCategory)}
+                            text="ADD TO CART"
+                        />
+                        <LargeButton
+                            isLoading={buyNowLoading}
+                            onClick={() => handleBuyNow()}
+                            text="BUY IT NOW"
+                            className={"bg-black text-white"}
+                        />
                         <div>{capitalizeFirstLetter(product?.description)}</div>
                     </div>
                 </div>

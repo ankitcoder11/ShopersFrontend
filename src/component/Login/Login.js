@@ -97,6 +97,7 @@ const Login = () => {
             formikLogin.resetForm();
             setShowPassword(false)
             setLoginLoading(false)
+            window.location.reload();
         } catch (error) {
             toast.error(error.message || 'An unexpected error occurred. Please try again.');
             console.error('Error:', error.message);

@@ -25,6 +25,7 @@ const TopBar = () => {
     Cookies.remove('accessToken');
     localStorage.removeItem('user')
     navigate('/');
+    window.location.reload();
   };
   return (
     <div className='w-full bg-topBarBg p-[5px]'>
@@ -60,7 +61,7 @@ const TopBar = () => {
               </div>
             </div>
             :
-            <Link to="/login" className='hover:scale-105 transition ease-linear duration-500 w-min cursor-pointer hover:bg-white hover:text-black rounded-full px-[8px] p-[5px]'>Login</Link>
+            <Link to="/login" className='hover:scale-105 transition ease-linear duration-500 w-min cursor-pointer hover:bg-white hover:text-black px-[8px] p-[5px]'>Login</Link>
           }
         </div>
       </div>
