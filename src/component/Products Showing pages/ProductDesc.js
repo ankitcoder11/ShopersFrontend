@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CiGlobe } from 'react-icons/ci';
 import SingleProduct from './SingleProduct';
 import { fetchProducts } from '../../api/products';
@@ -7,25 +7,24 @@ import Loader from '../../utiles/Loader';
 import { addToCart } from '../../api/cart';
 import { MyContext } from '../contextApi/MyContext';
 import toast from 'react-hot-toast';
-import ButtonLoader from '../../utiles/ButtonLoader';
-import { createOrder, verifyPayment } from '../../api/order';
 import LargeButton from '../../utiles/LargeButton';
 
 const ProductDesc = () => {
-    const location = useLocation()
+    const location = useLocation();
+    const navigate = useNavigate();
     const [indexImage, setIndexImage] = useState(0);
     const [indexSize, setIndexSize] = useState(0);
     const [productsData, setProductsData] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [addingItemToCart, setAddingItemToCart] = useState(false)
+    const [buyNowLoading, setBuyNowLoading] = useState(false)
     const fullPath = location.pathname;
     const arr = fullPath.split("/")
     const category = arr[2]
     const productId = arr[4];
     const subCategory = arr[3];
-    const [buyNowLoading, setBuyNowLoading] = useState(false);
 
-    const { user } = useContext(MyContext);
+    const { user, fetchCartItems } = useContext(MyContext);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,86 +58,27 @@ const ProductDesc = () => {
     }, [productId]);
 
     // Add item to the cart
-    const handleAddToCart = async (productId, quantity, mainCategory) => {
+    const handleAddToCart = async (productId, quantity, mainCategory, value) => {
         if (user) {
-            setAddingItemToCart(true)
+            if (value) setBuyNowLoading(true)
+            else setAddingItemToCart(true)
             const userId = user;
             try {
                 const data = { userId, productId, quantity, mainCategory };
                 const response = await addToCart(data);
-                toast.success(response?.message)
+                await fetchCartItems();
+                if (!value) toast.success(response?.message)
+                if (value) navigate(`/protected/checkout?single=true&productId=${product?._id}`)
             } catch (err) {
                 toast.error("Error while adding item to cart")
             } finally {
-                setAddingItemToCart(false)
+                setAddingItemToCart(false);
+                setBuyNowLoading(false)
             }
         } else {
             toast.error("Please login first")
         }
     };
-
-    const handleBuyNow = async () => {
-        if (user) {
-            setBuyNowLoading(true)
-            const orderData = {
-                userId: user,
-                productId: product?._id,
-                quantity: 1,
-                price: product?.price,
-            };
-
-            try {
-                // Step 1: Create order on the backend
-                const response = await createOrder(orderData);
-                if (response.success) {
-                    const { orderId, razorpayOrderId, amount } = response.data;
-
-                    // Step 2: Initiate Razorpay payment
-                    const options = {
-                        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-                        amount: amount.toString(),
-                        currency: 'INR',
-                        name: 'My Store',
-                        description: 'Purchase Product',
-                        order_id: razorpayOrderId,
-                        handler: async (paymentResponse) => {
-                            // Step 3: Verify payment
-                            const verification = await verifyPayment({ ...paymentResponse, orderId });
-
-                            if (verification.success) {
-                                toast.success('Order placed successfully!');
-                            } else {
-                                toast.error('Payment verification failed.');
-                            }
-                        },
-                        prefill: {
-                            name: user.name,
-                            email: user.email,
-                            contact: user.phone,
-                        },
-                        modal: {
-                            ondismiss: () => {
-                                toast.error('Payment was canceled.');
-                            },
-                        }
-                    };
-                    console.log('Razorpay Options:', options);
-                    const razorpay = new window.Razorpay(options);
-                    razorpay.open();
-                } else {
-                    toast.error('Failed to create order. Please try again.');
-                }
-            } catch (error) {
-                toast.error('Error processing your order.');
-                console.error(error);
-            } finally {
-                setBuyNowLoading(false)
-            }
-        } else {
-            toast.error('Please log in to proceed.');
-        }
-    };
-
 
     return (
         <div>
@@ -191,7 +131,7 @@ const ProductDesc = () => {
                         />
                         <LargeButton
                             isLoading={buyNowLoading}
-                            onClick={() => handleBuyNow()}
+                            onClick={() => { handleAddToCart(product?._id, 1, product?.mainCategory, true); setBuyNowLoading(true) }}
                             text="BUY IT NOW"
                             className={"bg-black text-white"}
                         />
@@ -216,3 +156,11 @@ const ProductDesc = () => {
 }
 
 export default ProductDesc
+
+
+
+
+// '/checkout?single=true'
+// Check if query parameter "single=true" exists
+//   const isSingleProductCheckout = new URLSearchParams(location.search).get('single') === 'true';
+// const checkoutItems = isSingleProductCheckout ? cartItems.slice(-1) : cartItems;

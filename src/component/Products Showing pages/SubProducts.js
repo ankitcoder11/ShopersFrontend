@@ -18,7 +18,6 @@ const SubProducts = () => {
       try {
         const response = await fetchProducts(mainCategory);
         setProductsData(response?.data)
-        console.log(response?.data)
       } catch (error) {
         console.error(error)
       } finally {

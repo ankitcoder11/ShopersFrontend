@@ -22,6 +22,10 @@ import { MyContext } from '../component/contextApi/MyContext'
 import ProductEditor from '../component/Admin/ProductEditor'
 import Loader from '../utiles/Loader'
 import CartSideBar from '../component/Common/CartSideBar'
+import Cart from '../component/Cart/Cart'
+import Checkout from '../component/Checkout/Checkout'
+import Orders from '../component/Profile/Orders'
+import AdminOrders from '../component/Admin/AdminOrders'
 const LayoutWrapper = ({ children }) => {
     return (
         <>
@@ -81,15 +85,22 @@ const Routing = () => {
                         </LayoutWrapper>
                     }
                 />
-                <Route path="/protected"
+                <Route path="/protected/*"
                     element={
                         <ProtectedRoute isAuthenticated={isAuthenticated}>
                             <LayoutWrapper>
-                                {/* Protected Component goes here */}
+                                <Routes>
+                                    {/* Protected Component goes here */}
+                                    <Route path="cart" element={<Cart />} />
+                                    <Route path="orders" element={<Orders />} />
+                                </Routes>
                             </LayoutWrapper>
                         </ProtectedRoute>
                     }
                 />
+
+                <Route path="/protected/checkout" element={<Checkout />} />
+
                 <Route path="/admin/*"
                     element={
                         <RoleBasedRoute isAuthenticated={isAuthenticated} isAdmin={isAdmin}>
@@ -99,6 +110,7 @@ const Routing = () => {
                                     <Route path="createproduct" element={<CreateProducts />} />
                                     <Route path="products" element={<ProductsAdmin />} />
                                     <Route path="products/:category/:subcategory/:product" element={<ProductEditor />} />
+                                    <Route path="orders" element={<AdminOrders />} />
                                 </Routes>
                             </LayoutWrapper>
                         </RoleBasedRoute>

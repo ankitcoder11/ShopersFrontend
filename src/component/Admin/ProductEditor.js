@@ -201,7 +201,7 @@ const ProductEditor = () => {
             {product?.imageUrl?.map((item, index) => {
               return (
                 <div key={index} className='w-[48%] h-[200px]'>
-                  <img className='h-full w-full object-cover bg-gray-300' src={item} />
+                  <img className='h-full w-full object-cover bg-gray-300' src={item} alt='Some error while loading' />
                 </div>
               )
             })}

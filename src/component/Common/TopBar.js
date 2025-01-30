@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { CiUser } from 'react-icons/ci';
 import { IoMdArrowDropup } from 'react-icons/io';
+import LargeButton from '../../utiles/LargeButton';
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -48,16 +49,27 @@ const TopBar = () => {
             <div className='relative p-[5px] bg-white rounded-full cursor-pointer group'>
               <div className='text-[20px] text-black'><CiUser /></div>
               <div className='absolute text-[20px] hidden group-hover:flex'><IoMdArrowDropup /></div>
-              <div className='absolute text-black w-[200px] bg-white right-0 top-[37px] p-[10px] hidden group-hover:flex items-center flex-col gap-[10px] shadow-xl'>
+              <div className='absolute z-50 text-black w-[400px] bg-white rounded-md right-[-10px] top-[37px] p-[10px] hidden group-hover:flex items-center flex-col gap-[10px] shadow-xl'>
                 <div>Hello {user?.fullName}</div>
-                <div className='flex justify-between w-full'>
-                  <div className={`z-[1] cursor-pointer border uppercase text-[14px] flex justify-center h-max items-center font-bodyFont font-medium py-[5px] px-[10px] w-max rounded-full text-white bg-black`} onClick={handleLogout}>
-                    Logout
-                  </div>
-                  {user?.email === 'ankit@gmail.com' && <Link to={'/admin/dashboard'}><div className={`z-[1] cursor-pointer border uppercase text-[14px] flex justify-center h-max items-center font-bodyFont font-medium py-[5px] px-[10px] w-max rounded-full text-white bg-black`}>
-                    Admin
-                  </div></Link>}
+                <div className='flex gap-[10px] items-center justify-center w-full'>
+                  <LargeButton
+                    onClick={() => { handleLogout() }}
+                    text="Logout"
+                    className={"bg-black text-white"}
+                  />
+                  {user?.email === 'ankit@gmail.com' &&
+                    <LargeButton
+                      onClick={() => { navigate('/admin/dashboard') }}
+                      text="Admin"
+                      className={"bg-black text-white"}
+                    />
+                  }
                 </div>
+                <LargeButton
+                  onClick={() => { navigate('/protected/orders') }}
+                  text="Orders"
+                  className={"bg-black text-white"}
+                />
               </div>
             </div>
             :

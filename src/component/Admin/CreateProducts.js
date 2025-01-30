@@ -67,7 +67,7 @@ const CreateProducts = () => {
             ],
         electronics:
             [
-                { name: 'Smart Watches', value: 'smart watches' },
+                { name: 'Smart Watches', value: 'smart-watches' },
                 { name: 'Laptops', value: 'laptops' },
                 { name: 'Mobiles', value: 'mobiles' },
             ],
