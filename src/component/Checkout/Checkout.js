@@ -133,10 +133,10 @@ const Checkout = () => {
                                 try {
                                     if (!isSingleProductCheckout) {
                                         const response = await clearCart({ userId: user._id });
+                                        setCartItems([])
+                                        setCartSize(0)
                                     }
                                     navigate('/')
-                                    setCartItems([])
-                                    setCartSize(0)
                                 } catch (error) {
                                     console.error('Error clearing cart:', error);
                                     toast.error('Failed to clear the cart.');

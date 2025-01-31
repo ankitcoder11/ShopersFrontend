@@ -1,10 +1,12 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Cookies.get('accessToken')}`,
     },
 });
 
