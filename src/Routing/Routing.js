@@ -26,6 +26,11 @@ import Cart from '../component/Cart/Cart'
 import Checkout from '../component/Checkout/Checkout'
 import Orders from '../component/Profile/Orders'
 import AdminOrders from '../component/Admin/AdminOrders'
+import OTPVerify from '../component/Login/OTPVerify'
+import Blog from '../component/Blog/Blog'
+import BlogPost from '../component/Blog/BlogPost'
+import ForgotPassword from '../component/Login/ForgotPassword'
+import ResetPassword from '../component/Login/ResetPassword'
 const LayoutWrapper = ({ children }) => {
     return (
         <>
@@ -43,6 +48,19 @@ const LayoutWrapper = ({ children }) => {
         </>
     );
 };
+
+const LoginLayoutWrapper = ({ children }) => {
+    return (
+        <div className='h-[100vh] relative overflow-hidden bg-gray-100 flex items-center justify-center'>
+            <div className='h-[400px] w-[400px] rounded-full absolute bottom-[-100px] left-[-100px] bg-[#808080]'></div>
+            <div className='w-0 h-0 border-[#808080] border-l-[250px] border-l-transparent border-r-[250px] border-b-[250px] absolute right-[-20px] top-[-20px] rotate-[-5deg]'></div>
+            <div className=' z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
+                {children}
+            </div>
+        </div>
+    )
+};
+
 const Routing = () => {
     const isAuthenticated = Boolean(Cookies.get('accessToken'));
     const { isAdmin, loading } = useContext(MyContext);
@@ -54,12 +72,25 @@ const Routing = () => {
             <Toaster />
             <CartSideBar />
             <Routes>
-                <Route path="/login" element={<Login />} />
+                <Route path="/login/*"
+                    element={
+                        <LoginLayoutWrapper>
+                            <Routes>
+                                <Route path="/" element={<Login />} />
+                                <Route path="verify-otp/:userId" element={<OTPVerify />} />
+                                <Route path="forgot-password" element={<ForgotPassword />} />
+                                <Route path="reset-password/:id" element={<ResetPassword />} />
+                            </Routes>
+                        </LoginLayoutWrapper>
+                    }
+                />
                 <Route path="*"
                     element={
                         <LayoutWrapper>
                             <Routes>
                                 <Route path="/" element={<Home />} />
+                                <Route path="/blog" element={<Blog />} />
+                                <Route path="/blog/:id" element={<BlogPost />} />
                             </Routes>
                         </LayoutWrapper>
                     }
