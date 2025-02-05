@@ -7,7 +7,7 @@ import Loader from '../../utiles/Loader';
 import { addToCart } from '../../api/cart';
 import { MyContext } from '../contextApi/MyContext';
 import toast from 'react-hot-toast';
-import LargeButton from '../../utiles/LargeButton';
+import LargeButton, { ButtonWhite } from '../../utiles/LargeButton';
 
 const ProductDesc = () => {
     const location = useLocation();
@@ -124,17 +124,8 @@ const ProductDesc = () => {
                                 <div>Low stock - {product?.stock} items left</div>
                             </div>
                         }
-                        <LargeButton
-                            isLoading={addingItemToCart}
-                            onClick={() => handleAddToCart(product?._id, 1, product?.mainCategory)}
-                            text="ADD TO CART"
-                        />
-                        <LargeButton
-                            isLoading={buyNowLoading}
-                            onClick={() => { handleAddToCart(product?._id, 1, product?.mainCategory, true); setBuyNowLoading(true) }}
-                            text="BUY IT NOW"
-                            className={"bg-black text-white"}
-                        />
+                        <ButtonWhite isLoading={addingItemToCart} onClick={() => handleAddToCart(product?._id, 1, product?.mainCategory)} text="ADD TO CART" />
+                        <LargeButton isLoading={buyNowLoading} onClick={() => { handleAddToCart(product?._id, 1, product?.mainCategory, true); setBuyNowLoading(true) }} text="BUY IT NOW" />
                         <div>{capitalizeFirstLetter(product?.description)}</div>
                     </div>
                 </div>

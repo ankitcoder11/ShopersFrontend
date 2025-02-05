@@ -11,7 +11,7 @@ const TestimonialSlider = ({ testimonialsData }) => {
       additionalTransfrom={0}
       arrows={false}  // Disable the navigation buttons
       autoPlay={true}  // Enable auto play
-      autoPlaySpeed={5000}  // Set auto scroll interval to 5 seconds
+      autoPlaySpeed={3000}  // Set auto scroll interval to 5 seconds
       centerMode={false}
       containerClass="container-with-dots"
       dotListClass=""

@@ -96,11 +96,7 @@ const AdminOrders = () => {
                     {new Date(order.createdAt).toLocaleString()}
                   </td>
                   <td className="py-2 px-4 border-b text-center">
-                    <LargeButton
-                      onClick={() => handleViewOrder(order)}
-                      text="View"
-                      className={"bg-black text-white"}
-                    />
+                    <LargeButton onClick={() => handleViewOrder(order)} text="View" />
                   </td>
                 </tr>
               ))
@@ -185,12 +181,7 @@ const AdminOrders = () => {
                 <option value="Failed">Failed</option>
               </select>
             </div>
-            <LargeButton
-              isLoading={updateStatusLoading}
-              onClick={() => updateOrderStatus(selectedOrder._id)}
-              text="Update"
-              className={"bg-black text-white"}
-            />
+            <LargeButton isLoading={updateStatusLoading} onClick={() => updateOrderStatus(selectedOrder._id)} text="Update" />
           </div>
         )}
       </Modal>

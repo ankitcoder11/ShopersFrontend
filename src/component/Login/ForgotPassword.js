@@ -48,7 +48,7 @@ const ForgotPassword = () => {
                 {!isValid && <p className='absolute text-[10px] bottom-[-15px] text-red-400'> Please enter a valid email.</p>}
             </div>
             {/* <LoginButtonComponent buttonText="Send reset link" handler={handleSubmit} loader={loading} bg="black" /> */}
-            <LargeButton text="Send" className='bg-black text-white uppercase' onClick={handleSubmit} isLoading={loading} />
+            <LargeButton text="Send" onClick={handleSubmit} isLoading={loading} />
         </form>
     );
 };

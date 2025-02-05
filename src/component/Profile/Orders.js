@@ -36,11 +36,7 @@ const Orders = () => {
             {loading ? <Loader /> : orders?.length === 0
                 ? <div className='h-[60vh] flex items-center justify-center flex-col gap-[10px] '>
                     Welcome! Once you place your first order, it will appear here.
-                    <LargeButton
-                        onClick={() => { navigate('/') }}
-                        text="Start Shopping"
-                        className={"bg-black text-white w-max"}
-                    />
+                    <LargeButton onClick={() => { navigate('/') }} text="Start Shopping" />
                 </div>
                 : <>{orders?.map((order, index) => {
                     return (

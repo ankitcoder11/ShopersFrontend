@@ -43,7 +43,7 @@ const Home = () => {
             category: 'MENS',
             para: 'View our extensive range',
             button: 'mens',
-            link: ' products/mens'
+            link: 'products/mens'
         },
         {
             url: 'https://fashionopolism-galleria.myshopify.com/cdn/shop/files/gallerie-007.jpg?v=1614313156&width=700',

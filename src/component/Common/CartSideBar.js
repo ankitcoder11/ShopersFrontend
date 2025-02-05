@@ -8,7 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import ButtonLoader from '../../utiles/ButtonLoader';
 import Loader from '../../utiles/Loader';
 import Modal from './../../utiles/Modal';
-import LargeButton from '../../utiles/LargeButton';
+import LargeButton, { ButtonWhite } from '../../utiles/LargeButton';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 const CartSideBar = () => {
@@ -120,64 +120,47 @@ const CartSideBar = () => {
                                 <div>{cartItems?.length ? cartItems?.length : '0'} Item(s)</div>
                             </div>
                             <div className='w-full h-full'>
-                                {
-                                    fetchCartLoading ? <Loader /> :
-                                        cartItems?.length === 0 || !cartItems
-                                            ? (user
-                                                ? <div className='text-center pt-[100px]'>Your cart is Empty</div>
-                                                : <LargeButton
-                                                    onClick={() => { navigate('/login'); closeSidebar() }}
-                                                    text="Login"
-                                                    className={"bg-black text-white"}
-                                                />)
-                                            : <div>
-                                                <div className='overflow-auto h-[calc(100vh-180px)] themeScroll'>
-                                                    {
-                                                        cartItems?.map((item, index) => {
-                                                            return (
-                                                                <div key={index} className='flex justify-between py-[10px] border-t font-bodyFont overflow-hidden'>
-                                                                    <div className='w-[27%] h-[150px]'>
-                                                                        <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
-                                                                            <img className='w-full h-full object-cover' src={item?.productId?.imageUrl[0]} />
-                                                                        </Link>
-                                                                    </div>
-                                                                    <div className='w-[48%] flex justify-between flex-col'>
-                                                                        <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
-                                                                            <div className='capitalize text-[14px]'>{item?.productId?.name?.length > 40 ? item?.productId?.name?.slice(0, 35) + '...' : item?.productId?.name}</div>
-                                                                        </Link>
-                                                                        <div>Quantity : {item?.quantity}</div>
-                                                                        <LargeButton
-                                                                            onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }}
-                                                                            text="Update Quantity"
-                                                                            className={"bg-black text-white w-max"}
-                                                                        />
-                                                                    </div>
-                                                                    <div className='w-[17%] flex justify-between items-end flex-col'>
-                                                                        <div className='text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>{removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}</div>
-                                                                        <div>₹ {item?.productId?.price}</div>
-                                                                    </div>
+                                {fetchCartLoading ? <Loader /> :
+                                    cartItems?.length === 0 || !cartItems
+                                        ? (user
+                                            ? <div className='text-center pt-[100px]'>Your cart is Empty</div>
+                                            : <LargeButton onClick={() => { navigate('/login'); closeSidebar() }} text="Login" className={"w-full"} />)
+                                        : <div>
+                                            <div className='overflow-auto h-[calc(100vh-180px)] themeScroll'>
+                                                {
+                                                    cartItems?.map((item, index) => {
+                                                        return (
+                                                            <div key={index} className='flex justify-between py-[10px] border-t font-bodyFont overflow-hidden'>
+                                                                <div className='w-[27%] h-[150px]'>
+                                                                    <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                                        <img className='w-full h-full object-cover' src={item?.productId?.imageUrl[0]} />
+                                                                    </Link>
                                                                 </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
-                                                <div className='border-t pt-[10px] flex justify-between items-center'>
-                                                    <div>Total</div>
-                                                    <div className=''>₹ {totalValue}</div>
-                                                </div>
-                                                <div className='pt-[10px] flex gap-[20px]'>
-                                                    <LargeButton
-                                                        onClick={() => { navigate('/protected/cart'); closeSidebar(); }}
-                                                        text="View Cart"
-                                                        className={"bg-[#ededed] w-max border-none"}
-                                                    />
-                                                    <LargeButton
-                                                        onClick={() => { navigate('/protected/checkout') }}
-                                                        text="Check Out"
-                                                        className={"bg-black text-white w-max border-none"}
-                                                    />
-                                                </div>
+                                                                <div className='w-[48%] flex justify-between flex-col'>
+                                                                    <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                                        <div className='capitalize text-[14px]'>{item?.productId?.name?.length > 40 ? item?.productId?.name?.slice(0, 35) + '...' : item?.productId?.name}</div>
+                                                                    </Link>
+                                                                    <div className='text-[14px]'>Quantity : {item?.quantity}</div>
+                                                                    <LargeButton onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }} text="Update Quantity" />
+                                                                </div>
+                                                                <div className='w-[17%] flex justify-between items-end flex-col'>
+                                                                    <div className='text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>{removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}</div>
+                                                                    <div>₹ {item?.productId?.price}</div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
                                             </div>
+                                            <div className='border-t pt-[10px] flex justify-between items-center'>
+                                                <div>Total</div>
+                                                <div className=''>₹ {totalValue}</div>
+                                            </div>
+                                            <div className='pt-[10px] flex gap-[20px]'>
+                                                <ButtonWhite onClick={() => { navigate('/protected/cart'); closeSidebar(); }} text="View Cart" />
+                                                <LargeButton onClick={() => { navigate('/protected/checkout') }} text="Check Out" />
+                                            </div>
+                                        </div>
                                 }
                             </div>
                         </div>
@@ -198,12 +181,7 @@ const CartSideBar = () => {
                         <div>$ {productToUpdateQuantity?.productId?.price}</div>
                     </div>
                 </div>
-                <LargeButton
-                    isLoading={quantityUpdateLoading}
-                    onClick={() => quantityOfProduct(productToUpdateQuantity)}
-                    text="Update"
-                    className={"bg-black text-white w-max"}
-                />
+                <LargeButton isLoading={quantityUpdateLoading} onClick={() => quantityOfProduct(productToUpdateQuantity)} text="Update" />
             </Modal>
         </>
     );

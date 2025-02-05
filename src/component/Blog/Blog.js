@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom'; // For navigation between pages
 const blogPosts = [
   {
     id: 1,
-    title: "5 Tips for Choosing the Best Watches",
-    excerpt: "In this blog post, we share some essential tips to help you choose the best watches based on your needs and style...",
-    imageUrl: "https://via.placeholder.com/600x300",  // Replace with actual images
+    title: "A shooting day in Etretat",
+    excerpt: "A romantic theater overlooking the English Channel, Étretat has inspired the most illustrious artists. A few moments on the spot are enough to understand why...",
+    imageUrl: "https://prestige-theme-allure.myshopify.com/cdn/shop/articles/Featured_image_-_A_day_in_Etretat.jpg?v=1679486958&width=600",
   },
   {
     id: 2,
-    title: "Top 10 Trending Watches of 2025",
-    excerpt: "Looking for the trendiest watches? We've rounded up the top 10 most popular watches of 2025. Find your perfect match!",
-    imageUrl: "https://via.placeholder.com/600x300",  // Replace with actual images
+    title: "Caring for your Air Plant",
+    excerpt: "Use these instructions to care for an Air Plant. This guide will tell you how to water an Air Plant; its light, temperature, humidity preferences and any additional care it might need to help it grow.",
+    imageUrl: "https://bespoke-home-garden-theme.myshopify.com/cdn/shop/articles/caring-for-your-air-plant.webp?crop=region&crop_height=750&crop_left=401&crop_top=0&crop_width=999&v=1733514660&width=710",
   },
   {
     id: 3,
-    title: "How to Maintain Your Watch for Longevity",
-    excerpt: "A watch can last a lifetime if properly maintained. Read our guide to ensure your watch stays in perfect condition...",
-    imageUrl: "https://via.placeholder.com/600x300",  // Replace with actual images
+    title: "2018 Sniper: Outdoor Life review",
+    excerpt: "",
+    imageUrl: "https://cdn.shopify.com/s/files/1/0027/0994/6429/files/andhika-soreng-390599-unsplash_2048x2048.jpg?v=1526480493",
   }
 ];
 

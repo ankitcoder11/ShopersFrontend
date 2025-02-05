@@ -81,13 +81,7 @@ const Cart = () => {
                 {
                     fetchCartLoading ? <Loader /> :
                         cartItems?.length === 0
-                            ? (user
-                                ? <div className='text-center p-[100px]'>Your cart is currently empty.</div>
-                                : <LargeButton
-                                    onClick={() => { navigate('/login'); }}
-                                    text="Login"
-                                    className={"bg-black text-white"}
-                                />)
+                            ? <div className='text-center p-[100px]'>Your cart is currently empty.</div>
                             : <div>
                                 {
                                     cartItems?.map((item, index) => {
@@ -106,11 +100,7 @@ const Cart = () => {
                                                 <div>₹ {item?.productId?.price}</div>
                                                 <div className='flex items-center justify-center flex-col'>
                                                     <div>Quantity : {item?.quantity}</div>
-                                                    <LargeButton
-                                                        onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }}
-                                                        text="Update Quantity"
-                                                        className={"bg-black text-white w-max"}
-                                                    />
+                                                    <LargeButton onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }} text="Update Quantity" />
                                                 </div>
                                                 <div>₹ {item?.productId?.price * item?.quantity}</div>
                                                 <div className='h-[250px] text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>
@@ -130,11 +120,7 @@ const Cart = () => {
                         <div>Total</div>
                         <div className=''>₹ {totalValue}</div>
                     </div>
-                    <LargeButton
-                        onClick={() => { navigate('/protected/checkout')}}
-                        text="Check Out"
-                        className={"bg-black text-white w-max border-none"}
-                    />
+                    <LargeButton onClick={() => { navigate('/protected/checkout') }} text="Check Out" />
                 </div>
             }
 
@@ -152,12 +138,7 @@ const Cart = () => {
                         <div>₹ {productToUpdateQuantity?.productId?.price}</div>
                     </div>
                 </div>
-                <LargeButton
-                    isLoading={quantityUpdateLoading}
-                    onClick={() => quantityOfProduct(productToUpdateQuantity)}
-                    text="Update"
-                    className={"bg-black text-white w-max"}
-                />
+                <LargeButton isLoading={quantityUpdateLoading} onClick={() => quantityOfProduct(productToUpdateQuantity)} text="Update" />
             </Modal>
         </div>
 
@@ -165,30 +146,3 @@ const Cart = () => {
 }
 
 export default Cart
-
-
-{/* <div>
-                {
-                    cartItems?.map((item, index) => {
-                        return (
-                            <div key={index} className='flex justify-between py-[10px] items-center border-t font-bodyFont overflow-hidden'>
-                                <div className='w-[27%] h-[250px]'>
-                                    <img className='w-full h-full object-contain' src={item?.productId?.imageUrl[0]} />
-                                </div>
-                                <div className='capitalize text-[14px]'>{item?.productId?.name?.length > 40 ? item?.productId?.name?.slice(0, 35) + '...' : item?.productId?.name}</div>
-                                <div>$ {item?.productId?.price}</div>
-                                <div className='flex items-center justify-center flex-col'>
-                                    <div>Quantity : {item?.quantity}</div>
-                                    <LargeButton
-                                        onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }}
-                                        text="Update Quantity"
-                                        className={"bg-black text-white w-max"}
-                                    />
-                                </div>
-                                <div>$ {item?.productId?.price * item?.quantity}</div>
-                                <div className='h-[250px] text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>{removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}</div>
-                            </div>
-                        )
-                    })
-                }
-            </div> */}

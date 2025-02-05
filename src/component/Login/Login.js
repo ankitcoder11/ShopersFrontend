@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { MyContext } from '../contextApi/MyContext';
 import { loginUsers, registerUsers } from '../../api/users';
-import LargeButton from '../../utiles/LargeButton';
+import LargeButton, { ButtonWhite } from '../../utiles/LargeButton';
 
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -148,13 +148,13 @@ const Login = () => {
                     <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Confirm Password'} name={'confirmPassword'} value={formikSignup?.values?.confirmPassword} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.confirmPassword} touched={formikSignup?.touched?.confirmPassword} />
                 </div>
                 {/* <LoginButtonComponent buttonText={'Sign Up'} handler={formikSignup.handleSubmit} loader={signUpLoading} bg={'black'} /> */}
-                <LargeButton text="Sign Up" className='bg-black text-white uppercase' onClick={formikSignup.handleSubmit} isLoading={signUpLoading} />
+                <LargeButton text="Sign Up" onClick={formikSignup.handleSubmit} isLoading={signUpLoading} />
             </form>
             <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-[-30%] absolute justify-center ${ani ? 'animate-form' : 'animate-formReturn'}`}>
                 <h1 className='font-logoFont text-[30px] text-white'>Welcome, Back!</h1>
                 <p className='w-[60%] font-bodyFont text-white text-[14px] text-center'>To keep connected with us please login with your personal info</p>
                 {/* <LoginButtonComponent buttonText={'Sign In'} handler={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} textColor={'black'} bg={'white'} /> */}
-                <LargeButton text="Sign In" className='bg-white uppercase border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} />
+                <ButtonWhite text="Sign In" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} />
             </div>
             {/*Sign in Page */}
             <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full left-[-50%] gap-[20px] absolute ${ani ? 'animate-formReturn' : 'animate-form'}`}
@@ -166,13 +166,13 @@ const Login = () => {
                 </div>
                 <Link to={'forgot-password'} className='font-bodyFont text-[12px] border-b'>Forgot your Password?</Link>
                 {/* <LoginButtonComponent buttonText={'Sign In'} handler={formikLogin.handleSubmit} loader={loginLoading} bg={'black'} /> */}
-                <LargeButton text="Sign In" className='bg-black text-white uppercase' onClick={formikLogin.handleSubmit} isLoading={loginLoading} />
+                <LargeButton text="Sign In" onClick={formikLogin.handleSubmit} isLoading={loginLoading} />
             </form>
             <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-0 absolute justify-center ${ani ? 'animate-formSecond' : 'animate-formSecondReturn'}`}>
                 <h1 className='font-logoFont text-[30px] text-white'>Hellow, Friend!</h1>
                 <p className='w-1/2 font-bodyFont text-white text-[14px] text-center'>Enter ypur personal details and start journy with us</p>
                 {/* <LoginButtonComponent buttonText={'Sign Up'} handler={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} textColor={'black'} bg={'white'} /> */}
-                <LargeButton text="Sign Up" className='bg-white uppercase border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} />
+                <ButtonWhite text="Sign Up" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} />
             </div>
             <div className={`absolute w-1/2 h-full bg-black ${ani ? 'animate-blueSlider' : 'right-[-15%] animate-returnBlueSlider'} `}></div>
         </div>

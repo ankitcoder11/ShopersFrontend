@@ -38,13 +38,12 @@ const AutoImageSlider = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
   };
 
-  // Automatically change image every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
     }, 5000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -60,7 +59,7 @@ const AutoImageSlider = () => {
           <LargeButton
             onClick={() => navigate(`${data[currentImageIndex].link}`)}
             text={data[currentImageIndex].buttonText}
-            className='bg-black w-max'
+            className='border-none'
           />
         </div>
 

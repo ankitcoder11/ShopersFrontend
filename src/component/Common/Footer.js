@@ -1,14 +1,11 @@
 import React from 'react'
-import { FaFacebookF } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
 import { ReactComponent as VISA } from '../svg/visa.svg';
 import { ReactComponent as MASTER } from '../svg/master.svg';
 import { ReactComponent as AMERICAN } from '../svg/american.svg';
 import { ReactComponent as PAYPAL } from '../svg/paypal.svg';
 import { ReactComponent as UNK } from '../svg/unk.svg';
 import { ReactComponent as DISCOVER } from '../svg/discover.svg';
-import { Link } from 'react-router-dom'
+import { FacebookSocialMedia, InstagramSocialMedia, TwitterSocialMedia } from '../../utiles/SocialMedia';
 const Footer = () => {
     const footerData = [
         { title: 'ABOUT', disc: 'Our products are inspired by the people and world around us. Beautiful, high quality goods that are designed especially for you. Discover our story and meet the people that make our brand what it is.' },
@@ -17,8 +14,8 @@ const Footer = () => {
         { title: 'RECENT POSTS', list: [{ name: 'A practical guide to watches', path: '/blogs/news/a-practical-guide-to-watches' }, { name: 'Millionaires of the 21st Century', path: '/blogs/news/78257667-watches-of-monaco' }, { name: 'What to Get That Special September Someone', path: '/blogs/news/78257155-watches-of-wall-street' }] }
     ]
     return (
-        <div className='p-[50px] pb-[20px] flex flex-col h-[500px] justify-between text-[14px] font-bodyFont text-textColour'>
-            <div className='flex justify-between'>
+        <div className='p-[50px] pb-[20px] flex flex-col h-[150px] justify-between text-[14px] font-bodyFont text-textColour'>
+            {/* <div className='flex justify-between'>
                 {
                     footerData.map((obj, index) => {
                         return (
@@ -46,15 +43,15 @@ const Footer = () => {
                         )
                     })
                 }
-            </div>
+            </div> */}
             <div className='flex justify-between items-end'>
                 <div className='flex flex-col gap-[15px] '>
                     <div className='flex gap-[10px]'>
-                        <Link to='https://www.facebook.com/ugmedia' target='_blank' ><FaFacebookF /></Link>
-                        <Link to='https://www.facebook.com/ugmedia' target='_blank' ><FaXTwitter /></Link>
-                        <Link to='https://www.facebook.com/ugmedia' target='_blank' ><FaInstagram /></Link>
+                        <FacebookSocialMedia />
+                        <TwitterSocialMedia />
+                        <InstagramSocialMedia />
                     </div>
-                    <div><p>© 2024 Fashionopolism Galleria • Powered by Shopify</p></div>
+                    <div><p>© 2024 Soppers adda • Powered by Ankit</p></div>
                 </div>
                 <div className='flex gap-[15px]'>
                     <VISA />

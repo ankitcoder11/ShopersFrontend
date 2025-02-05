@@ -8,7 +8,7 @@ const Modal = ({ isOpen, closeModal, children, heading, width, height }) => {
         <div className="fixed inset-0 flex items-center justify-center bg-black z-50 bg-opacity-50">
             <div className='bg-white p-[20px] rounded-lg shadow-lg overflow-auto'
                 style={{ height: height || '', width: width || '' }}>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center pb-[10px]">
                     <h2 className="text-xl font-semibold">{heading}</h2>
                     <div className="cursor-pointer" onClick={closeModal}>
                         <RxCross1 />

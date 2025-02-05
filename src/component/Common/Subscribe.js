@@ -1,8 +1,5 @@
 import React from 'react'
-import { FaFacebookF } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { Link } from 'react-router-dom'
+import { FacebookSocialMedia, InstagramSocialMedia, TwitterSocialMedia } from '../../utiles/SocialMedia';
 
 const Subscribe = () => {
     return (
@@ -17,9 +14,9 @@ const Subscribe = () => {
                     <p className='p-[10px] cursor-pointer'>Join</p>
                 </div>
                 <div className='flex gap-5'>
-                    <Link to='https://www.facebook.com/ugmedia' target='_blank'><FaFacebookF /></Link>
-                    <Link to='https://twitter.com/undergrndmedia' target='_blank'><FaXTwitter /></Link>
-                    <Link to='https://www.instagram.com/undergroundmedia/' target='_blank'><FaInstagram /></Link>
+                    <FacebookSocialMedia />
+                    <TwitterSocialMedia />
+                    <InstagramSocialMedia />
                 </div>
             </div>
         </div>

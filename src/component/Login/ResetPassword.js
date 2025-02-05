@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { InputPasswordComponent } from '../LoginInputs/InputLoginComponent';
 import { resetPassword } from '../../api/users';
 import toast from 'react-hot-toast';
-import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import LargeButton from '../../utiles/LargeButton';
 
 const ResetPassword = () => {
@@ -72,7 +71,7 @@ const ResetPassword = () => {
                 {!isValid && <p className='absolute text-[10px] bottom-[-15px] text-red-400'>{errorMessage}</p>}
             </div>
             {/* <LoginButtonComponent buttonText="Reset Password" handler={handleSubmit} loader={loading} bg="black" /> */}
-            <LargeButton text="Reset Password" className='bg-black text-white uppercase' onClick={handleSubmit} isLoading={loading} />
+            <LargeButton text="Reset Password" onClick={handleSubmit} isLoading={loading} />
         </form>
     );
 };

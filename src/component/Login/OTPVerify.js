@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import { otpVerifyApi } from '../../api/users';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -67,7 +66,7 @@ const OTPVerify = () => {
                     {error && <p className='absolute text-[10px] bottom-[-15px] text-red-400'>{error}</p>}
                 </div>
                 {/* <LoginButtonComponent buttonText="Verify" handler={handleSubmit} loader={loading} bg="black" /> */}
-                <LargeButton text="Verify" className='bg-black text-white uppercase' onClick={handleSubmit} isLoading={loading} />
+                <LargeButton text="Verify" onClick={handleSubmit} isLoading={loading} />
             </form>
         </div>
     );

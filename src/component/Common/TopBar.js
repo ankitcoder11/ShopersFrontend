@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FaFacebookF } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +6,7 @@ import Cookies from 'js-cookie';
 import { CiUser } from 'react-icons/ci';
 import { IoMdArrowDropup } from 'react-icons/io';
 import LargeButton from '../../utiles/LargeButton';
+import { FacebookSocialMedia, InstagramSocialMedia, TwitterSocialMedia } from '../../utiles/SocialMedia';
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -32,9 +30,9 @@ const TopBar = () => {
     <div className='w-full bg-topBarBg p-[5px]'>
       <div className='w-[94%] grid grid-cols-4 mx-auto p-[10px] text-white'>
         <div className='flex gap-[10px] max-[980px]:hidden opacity-90'>
-          <div><FaFacebookF /></div>
-          <div><FaXTwitter /></div>
-          <div><FaInstagram /></div>
+          <FacebookSocialMedia />
+          <TwitterSocialMedia />
+          <InstagramSocialMedia />
         </div>
         <div className=' col-span-2 max-[980px]:col-span-4 flex justify-between items-center opacity-90'>
           <div onClick={() => val > 0 ? setVal(val - 1) : setVal(1)} className='text-[25px] max-[430px]:text-[20px] cursor-pointer'><MdKeyboardArrowLeft /></div>
@@ -52,24 +50,12 @@ const TopBar = () => {
               <div className='absolute z-50 text-black w-[400px] bg-white rounded-md right-[-10px] top-[37px] p-[10px] hidden group-hover:flex items-center flex-col gap-[10px] shadow-xl'>
                 <div>Hello {user?.fullName}</div>
                 <div className='flex gap-[10px] items-center justify-center w-full'>
-                  <LargeButton
-                    onClick={() => { handleLogout() }}
-                    text="Logout"
-                    className={"bg-black text-white"}
-                  />
+                  <LargeButton onClick={() => { handleLogout() }} text="Logout" />
                   {user?.email === 'ankit@gmail.com' &&
-                    <LargeButton
-                      onClick={() => { navigate('/admin/dashboard') }}
-                      text="Admin"
-                      className={"bg-black text-white"}
-                    />
+                    <LargeButton onClick={() => { navigate('/admin/dashboard') }} text="Admin" />
                   }
                 </div>
-                <LargeButton
-                  onClick={() => { navigate('/protected/orders') }}
-                  text="Orders"
-                  className={"bg-black text-white"}
-                />
+                <LargeButton onClick={() => { navigate('/protected/orders') }} text="Orders" />
               </div>
             </div>
             :
