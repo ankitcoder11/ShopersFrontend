@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { CiUser } from 'react-icons/ci';
 import { IoMdArrowDropup } from 'react-icons/io';
 import LargeButton from '../../utiles/LargeButton';
 import { FacebookSocialMedia, InstagramSocialMedia, TwitterSocialMedia } from '../../utiles/SocialMedia';
+import { MyContext } from '../contextApi/MyContext';
 
 const TopBar = () => {
   const navigate = useNavigate();
+  const { handleLogout, user, isAuthenticated } = useContext(MyContext);
   const [val, setVal] = useState(0);
-  const [user, setUser] = useState({});
   const adv = ["free international shipping", "extended warranty available"]
-  const token = Cookies.get('accessToken');
-  useEffect(() => {
-    if (token) {
-      const userDetailes = JSON.parse(localStorage.getItem('user'))
-      setUser(userDetailes)
-    }
-  }, [token])
-  const handleLogout = () => {
-    Cookies.remove('accessToken');
-    localStorage.removeItem('user')
-    navigate('/');
-    window.location.reload();
-  };
+  
   return (
     <div className='w-full bg-topBarBg p-[5px]'>
       <div className='w-[94%] grid grid-cols-4 mx-auto p-[10px] text-white'>
@@ -42,7 +30,7 @@ const TopBar = () => {
           <div onClick={() => val < 1 ? setVal(val + 1) : setVal(0)} className='text-[25px] max-[430px]:text-[20px] cursor-pointer'><MdKeyboardArrowRight /></div>
         </div>
         <div className='max-[980px]:hidden font-bodyFont text-[14px] flex justify-end items-center'>
-          {token
+          {isAuthenticated
             ?
             <div className='relative p-[5px] bg-white rounded-full cursor-pointer group'>
               <div className='text-[20px] text-black'><CiUser /></div>

@@ -42,6 +42,14 @@ const MyContextProvider = ({ children }) => {
             setLoading(false);
         }
     }, []);
+
+    const handleLogout = () => {
+        Cookies.remove('accessToken');
+        localStorage.removeItem('user')
+        window.location.href = '/'
+        // window.location.reload();
+    };
+
     return (
         <MyContext.Provider value={{
             navBarMenu,
@@ -49,6 +57,8 @@ const MyContextProvider = ({ children }) => {
             user,
             isAdmin,
             setIsAdmin,
+            handleLogout,
+            isAuthenticated,
             loading,
             isSidebarOpen,
             setIsSidebarOpen,

@@ -157,7 +157,6 @@ const Checkout = () => {
                         }
                     };
 
-                    console.log('Razorpay Options:', options);
                     const razorpay = new window.Razorpay(options);
                     razorpay.open();
                 } else {

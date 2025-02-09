@@ -16,7 +16,6 @@ const Orders = () => {
         try {
             const response = await getUserOrders(user?._id);
             setOrders(response.data)
-            console.log(response.data)
         } catch (err) {
             // console.error(err)
             // toast.error("Something went wrong")
@@ -29,7 +28,6 @@ const Orders = () => {
         getOrders();
     }, [])
 
-    console.log(orders)
     return (
         <div className='w-[90%] mx-auto font-bodyFont flex flex-col gap-[20px] py-[10px] '>
             {orders.length !== 0 && <div className='text-[24px] font-semibold'>Your Orders</div>}

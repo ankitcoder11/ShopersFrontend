@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { MdKeyboardArrowDown, MdOutlineShoppingCart } from 'react-icons/md'
 import { RxCross1 } from 'react-icons/rx'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { MyContext } from '../contextApi/MyContext'
 import { Categories } from '../Common/Data/Categories'
 
 const NavBarMenu = () => {
+    const navigate = useNavigate();
     const navList = [
         { name: 'Home', path: '/' },
         { name: 'Shop', path: '' },
@@ -16,7 +17,7 @@ const NavBarMenu = () => {
     ]
     // , 'Theme Features'
     const [toSearch, setToSearch] = useState('');
-    const { setNavBarMenu, setIsSidebarOpen, isSidebarOpen, cartSize } = useContext(MyContext);
+    const { setNavBarMenu, setIsSidebarOpen, isSidebarOpen, cartSize, handleLogout, isAuthenticated } = useContext(MyContext);
     const [forClose, setForClose] = useState(true);
     const [shopItem, setShopItem] = useState(false);
     const [subShopItem, setSubShopItem] = useState([
@@ -88,6 +89,8 @@ const NavBarMenu = () => {
                                 <p className='font-bodyFont cursor-pointer p-[10px] border-b' key={index}>{item.name}</p>
                             </Link>
                     ))}
+                    {isAuthenticated ? <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => handleLogout()}>Logout</p>
+                        : <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => navigate('/login')}>Login</p>}
                 </div>
                 <div className='border flex items-center p-[10px] rounded-[5px] gap-[10px] justify-between'>
                     <div className='w-full'>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import LargeButton from '../../utiles/LargeButton';
 import { useNavigate } from 'react-router-dom';
@@ -27,8 +27,12 @@ const AutoImageSlider = () => {
       link: '/products/electronics'
     }
   ];
+
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [startTouch, setStartTouch] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef(null);
 
   const nextSlide = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.length);
@@ -36,6 +40,34 @@ const AutoImageSlider = () => {
 
   const prevSlide = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+  };
+
+  const handleSwipeStart = (e) => {
+    const touchStart = e.touches ? e.touches[0].clientX : e.clientX;
+    setStartTouch(touchStart);
+    setIsDragging(true);
+  };
+
+  const handleSwipeMove = (e) => {
+    if (startTouch === 0) return;
+
+    const touchMove = e.touches ? e.touches[0].clientX : e.clientX;
+
+    if (touchMove === undefined) return;
+
+    const swipeDistance = startTouch - touchMove;
+
+    if (Math.abs(swipeDistance) > 50) {
+      if (swipeDistance > 0) nextSlide();
+      else prevSlide();
+      setStartTouch(0);
+      setIsDragging(false);
+    }
+  };
+
+  const handleSwipeEnd = () => {
+    setStartTouch(0);
+    setIsDragging(false);
   };
 
   useEffect(() => {
@@ -47,7 +79,11 @@ const AutoImageSlider = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden relative">
+    <div ref={sliderRef} className="overflow-hidden relative"
+      onTouchStart={handleSwipeStart} onTouchMove={handleSwipeMove} onTouchEnd={handleSwipeEnd}
+      onMouseDown={handleSwipeStart} onMouseMove={handleSwipeMove} onMouseUp={handleSwipeEnd}
+      onMouseLeave={handleSwipeEnd}
+    >
       <div
         className="w-full h-screen max-[500px]:h-[55vh] bg-no-repeat bg-cover text-white flex items-center justify-center p-10 transition-all duration-500"
         style={{ backgroundImage: `url(${data[currentImageIndex].image})` }}
@@ -74,6 +110,12 @@ const AutoImageSlider = () => {
         >
           <MdKeyboardArrowRight />
         </div>
+      </div>
+
+      <div className="absolute flex gap-[10px] items-center left-[45%] bottom-[5px] ">
+        {data.map((_, index) => (
+          <div key={index} onClick={() => setCurrentImageIndex(index)} className={`h-[10px] w-[10px] rounded-full ${index === currentImageIndex ? 'bg-gray-800' : 'bg-gray-400'}`}></div>
+        ))}
       </div>
     </div>
   );
