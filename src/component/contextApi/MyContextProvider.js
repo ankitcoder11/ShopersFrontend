@@ -56,6 +56,7 @@ const MyContextProvider = ({ children }) => {
             setNavBarMenu,
             user,
             isAdmin,
+            isAdmin,
             setIsAdmin,
             handleLogout,
             isAuthenticated,

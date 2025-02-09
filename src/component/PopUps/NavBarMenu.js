@@ -12,12 +12,10 @@ const NavBarMenu = () => {
         { name: 'Home', path: '/' },
         { name: 'Shop', path: '' },
         { name: 'Blog', path: '/blog' },
-        { name: 'Admin', path: '/admin/dashboard' },
-        { name: 'Orders', path: '/protected/orders' },
     ]
-    // , 'Theme Features'
+
     const [toSearch, setToSearch] = useState('');
-    const { setNavBarMenu, setIsSidebarOpen, isSidebarOpen, cartSize, handleLogout, isAuthenticated } = useContext(MyContext);
+    const { setNavBarMenu, setIsSidebarOpen, isSidebarOpen, cartSize, handleLogout, isAuthenticated, isAdmin } = useContext(MyContext);
     const [forClose, setForClose] = useState(true);
     const [shopItem, setShopItem] = useState(false);
     const [subShopItem, setSubShopItem] = useState([
@@ -90,7 +88,9 @@ const NavBarMenu = () => {
                             </Link>
                     ))}
                     {isAuthenticated ? <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => handleLogout()}>Logout</p>
-                        : <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => navigate('/login')}>Login</p>}
+                        : <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => { setForClose(false); setTimeout(() => { setNavBarMenu(false); }, 500); navigate('/login') }}>Login</p>}
+                    {isAdmin && <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => { setForClose(false); setTimeout(() => { setNavBarMenu(false); }, 500); navigate('/admin/dashboard') }}>Admin</p>}
+                    {isAuthenticated && <p className='font-bodyFont cursor-pointer p-[10px] border-b' onClick={() => { setForClose(false); setTimeout(() => { setNavBarMenu(false); }, 500); navigate('/protected/orders') }}>Orders</p>}
                 </div>
                 <div className='border flex items-center p-[10px] rounded-[5px] gap-[10px] justify-between'>
                     <div className='w-full'>

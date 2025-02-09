@@ -48,10 +48,10 @@ const OTPVerify = () => {
 
     return (
         <div className='flex flex-col items-center justify-center w-full h-full gap-[10px]'>
-            <h2 className="text-2xl font-semibold text-center">OTP Verification</h2>
+            <h2 className="text-2xl max-[530px]:text-xl font-semibold text-center">OTP Verification</h2>
             <p className="text-sm">Enter OTP sent to your email</p>
             <form onSubmit={handleSubmit} className="flex flex-col items-center gap-[20px]">
-                <div className="flex gap-[10px] items-center justify-center relative">
+                <div className="flex gap-[10px] max-[530px]:gap-[5px] items-center justify-center relative">
                     {otp.map((digit, index) => (
                         <input
                             key={index}
@@ -60,7 +60,7 @@ const OTPVerify = () => {
                             maxLength="1"
                             value={digit}
                             onChange={(e) => handleChange(e, index)}
-                            className="w-14 h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-md focus:outline-none focus:border-black"
+                            className="w-14 max-[530px]:w-8 h-14 max-[530px]:h-8 text-center text-2xl max-[530px]:text-lg font-bold max-[530px]:font-semibold border-2 border-gray-300 rounded-md focus:outline-none focus:border-black"
                         />
                     ))}
                     {error && <p className='absolute text-[10px] bottom-[-15px] text-red-400'>{error}</p>}

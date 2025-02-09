@@ -63,7 +63,7 @@ const LoginLayoutWrapper = ({ children }) => {
 
 const Routing = () => {
     const isAuthenticated = Boolean(Cookies.get('accessToken'));
-    const { isAdmin, loading } = useContext(MyContext);
+    const { loading } = useContext(MyContext);
     if (loading) {
         return <Loader />
     }

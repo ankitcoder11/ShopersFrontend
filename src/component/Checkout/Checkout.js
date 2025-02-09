@@ -75,6 +75,7 @@ const Checkout = () => {
     const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
     const [defaultAddress, setDefaultAddress] = useState(null);
     const [defaultAddressTemp, setDefaultAddressTemp] = useState(null);
+    const [errorAddress, setErrorAddress] = useState(false);
 
     const queryParams = new URLSearchParams(location.search);
     const isSingleProductCheckout = new URLSearchParams(location.search).get('single') === 'true';
@@ -266,7 +267,8 @@ const Checkout = () => {
                             : <div className='hover:underline h-max text-blue-600 cursor-pointer' onClick={() => setIsModalOpen(true)}>Add address</div>
                         }
                     </div>
-                    <LargeButton onClick={() => { if (defaultAddress) { handleBuyNow() } }} text="Place Order" isLoading={buyNowLoading} />
+                    <LargeButton onClick={() => { if (defaultAddress) { handleBuyNow(); setErrorAddress(false) } else { setErrorAddress(true) } }} text="Place Order" isLoading={buyNowLoading} />
+                    {errorAddress && <p className='absolute text-[10px] top-[100px] max-[700px]:top-[92px] text-red-400'>Address is required</p>}
                 </div>
                 <div className='border'></div>
                 <div className='w-[45%] max-[700px]:w-full flex flex-col gap-[10px] h-[calc(100vh-100px)] max-[700px]:h-full p-[15px] overflow-auto '>
@@ -326,7 +328,7 @@ const Checkout = () => {
                                 className='outline-none border text-[14px] w-full p-[10px] rounded' />
                             {formikForm?.errors?.street && formikForm?.touched?.street && <p className='absolute text-[10px] bottom-[-12px] text-red-400'> {formikForm?.errors?.street}</p>}
                         </div>
-                        <div className='flex gap-[10px]'>
+                        <div className='flex gap-[10px] max-[700px]:flex-col'>
                             <div className='relative'>
                                 <input
                                     type='text' placeholder='City' name='city' value={formikForm?.values?.city} onChange={formikForm.handleChange} className='outline-none border text-[14px] w-full p-[10px] rounded' />
@@ -354,7 +356,7 @@ const Checkout = () => {
                         <label htmlFor='isDefault' className='text-[14px] cursor-pointer'>Set as default address</label>
                         {formikForm?.errors?.isDefault && formikForm?.touched?.isDefault && (<p className='absolute text-[10px] bottom-[-12px] text-red-400'>{formikForm?.errors?.isDefault}</p>)}
                     </div>
-                    <LargeButton onClick={() => { formikForm.handleSubmit() }} text="Use this address" isLoading={addAddressListLoading} />
+                    <LargeButton onClick={() => { formikForm.handleSubmit(); setErrorAddress(false) }} text="Use this address" isLoading={addAddressListLoading} />
                 </form>
             </Modal>
             <Modal isOpen={isAddressModalOpen} closeModal={() => setIsAddressModalOpen(false)} heading={'Your addresses'} width={'50vw'} height={'90%'}>
@@ -367,7 +369,7 @@ const Checkout = () => {
                             </label>
                         </div>
                     ))}
-                    <div className='flex gap-[10px] '>
+                    <div className='flex gap-[10px] max-[500px]:flex-col '>
                         <LargeButton onClick={() => { setDefaultAddress(defaultAddressTemp); setIsAddressModalOpen(false) }} text="Use this address" />
                         <LargeButton onClick={() => { setIsModalOpen(true); setIsAddressModalOpen(false) }} text="Add a new address" />
                     </div>

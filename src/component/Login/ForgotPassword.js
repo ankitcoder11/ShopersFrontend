@@ -31,7 +31,7 @@ const ForgotPassword = () => {
         try {
             const response = await forgotPassword({ email });
             toast.success(response.message);
-            // navigate('/login');
+            navigate('/login');
         } catch (error) {
             toast.error(error.message || 'Verification failed. Please try again.');
             console.error(error);

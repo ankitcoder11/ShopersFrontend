@@ -5,7 +5,7 @@ import { Categories } from './Data/Categories';
 
 const NavBar = () => {
     const navList = ['Home', 'Shop', 'Blog'];
-    // , 'Theme Features'
+
     return (
         <div className='max-[980px]:hidden z-[2]'>
             <div className='w-[94%] mx-auto p-[10px] relative'>

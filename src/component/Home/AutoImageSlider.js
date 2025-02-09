@@ -90,7 +90,7 @@ const AutoImageSlider = () => {
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30"></div>
         <div className="z-[1] flex flex-col justify-center items-center gap-[10px]">
-          <h1 className="text-4xl max-[500px]:text-xl font-bold uppercase animate__animated animate__fadeIn">{data[currentImageIndex].heading}</h1>
+          <h1 className="text-4xl max-[500px]:text-xl font-bold uppercase animate__animated animate__fadeIn text-center">{data[currentImageIndex].heading}</h1>
           <p className="text-lg max-[500px]:text-[14px] text-center animate__animated animate__fadeIn">{data[currentImageIndex].para}</p>
           <LargeButton onClick={() => navigate(`${data[currentImageIndex].link}`)}
             text={data[currentImageIndex].buttonText}
@@ -100,13 +100,13 @@ const AutoImageSlider = () => {
 
         <div
           onClick={prevSlide}
-          className="absolute left-5 max-[500px]:left-1 top-1/2 transform -translate-y-1/2 text-white text-4xl max-[500px]:text-[25px] cursor-pointer hover:bg-white hover:text-black p-2 max-[500px]:p-1 rounded-full"
+          className="absolute max-[550px]:hidden left-5 max-[500px]:left-1 top-1/2 transform -translate-y-1/2 text-white text-4xl max-[500px]:text-[25px] cursor-pointer hover:bg-white hover:text-black p-2 max-[500px]:p-1 rounded-full"
         >
           <MdKeyboardArrowLeft />
         </div>
         <div
           onClick={nextSlide}
-          className="absolute right-5 max-[500px]:right-1 top-1/2 transform -translate-y-1/2 text-white text-4xl max-[500px]:text-[25px] cursor-pointer hover:bg-white hover:text-black p-2 max-[500px]:p-1 rounded-full"
+          className="absolute max-[550px]:hidden right-5 max-[500px]:right-1 top-1/2 transform -translate-y-1/2 text-white text-4xl max-[500px]:text-[25px] cursor-pointer hover:bg-white hover:text-black p-2 max-[500px]:p-1 rounded-full"
         >
           <MdKeyboardArrowRight />
         </div>
