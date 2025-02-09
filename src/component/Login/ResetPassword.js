@@ -70,7 +70,6 @@ const ResetPassword = () => {
                 />
                 {!isValid && <p className='absolute text-[10px] bottom-[-15px] text-red-400'>{errorMessage}</p>}
             </div>
-            {/* <LoginButtonComponent buttonText="Reset Password" handler={handleSubmit} loader={loading} bg="black" /> */}
             <LargeButton text="Reset Password" onClick={handleSubmit} isLoading={loading} />
         </form>
     );

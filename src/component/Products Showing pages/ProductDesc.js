@@ -8,6 +8,7 @@ import { addToCart } from '../../api/cart';
 import { MyContext } from '../contextApi/MyContext';
 import toast from 'react-hot-toast';
 import LargeButton, { ButtonWhite } from '../../utiles/LargeButton';
+import ProductImageSlider from './ProductImageSlider';
 
 const ProductDesc = () => {
     const location = useLocation();
@@ -46,7 +47,7 @@ const ProductDesc = () => {
         ?.filter((product) => product._id !== productId && product.category === subCategory)
         ?.slice(0, 5);
 
-    const size = ['XS', 'S', 'M', 'L', 'XL']
+    // const size = ['XS', 'S', 'M', 'L', 'XL']
 
     const capitalizeFirstLetter = (text) => {
         if (!text) return '';
@@ -83,8 +84,8 @@ const ProductDesc = () => {
     return (
         <div>
             {isLoading ? <Loader /> :
-                <div className='w-[95%] mx-auto py-[20px] flex justify-between font-bodyFont'>
-                    <div className='w-[59%] flex justify-between'>
+                <div className='w-[95%] mx-auto py-[20px] flex max-[768px]:flex-col justify-between font-bodyFont'>
+                    <div className='max-[768px]:hidden w-[59%] flex justify-between'>
                         <div className='w-[15%]'>
                             {product?.imageUrl.map((item, index) => {
                                 return (
@@ -94,14 +95,15 @@ const ProductDesc = () => {
                                 )
                             })}
                         </div>
-                        <div className='w-[80%] h-[800px]'>
+                        <div className='w-[80%] h-[800px] max-[900px]:h-[500px]'>
                             <img className='w-full h-full object-cover' src={product?.imageUrl[indexImage]} alt='Some error while loading' />
                         </div>
                     </div>
-                    <div className='w-[39%] font-bodyFont flex flex-col gap-[20px]'>
+                    <div className='min-[769px]:hidden max-w-[1200px] w-full aspect-[10/12] pb-[20px] mx-auto relative'><ProductImageSlider images={product?.imageUrl} /></div>
+                    <div className='w-[39%] max-[768px]:w-full font-bodyFont flex flex-col gap-[20px]'>
                         <div className='text-[27px] uppercase font-normal'>{product?.name}</div>
                         <div className='text-[20px]'>Rs. {product?.price}</div>
-                        <div className='flex  flex-col gap-[10px]'>
+                        {/* <div className='flex  flex-col gap-[10px]'>
                             <div>SIZE</div>
                             <div className='text-[18px] flex gap-[10px]'>
                                 {size.map((item, index) => {
@@ -110,7 +112,7 @@ const ProductDesc = () => {
                                     )
                                 })}
                             </div>
-                        </div>
+                        </div> */}
                         <div className='flex items-center gap-[10px] text-[18px]'>
                             <div className='text-[20px]'><CiGlobe /></div>
                             <div>Free worldwide shipping</div>
@@ -130,10 +132,10 @@ const ProductDesc = () => {
                     </div>
                 </div>
             }
-            {productsMayLike?.length !== 0 &&
+            {productsMayLike?.length !== 0 && !isLoading &&
                 <div>
                     <div className='text-center text-[20px] uppercase font-bodyFont'>You may also like</div>
-                    <div className='flex w-[95%] gap-[20px] flex-wrap mx-auto py-[20px]'>
+                    <div className='flex w-[95%] gap-[15px] flex-wrap mx-auto py-[20px]'>
                         {productsMayLike?.map((item, index) => {
                             return (
                                 <SingleProduct key={index} index={index} data={item} />
@@ -147,11 +149,3 @@ const ProductDesc = () => {
 }
 
 export default ProductDesc
-
-
-
-
-// '/checkout?single=true'
-// Check if query parameter "single=true" exists
-//   const isSingleProductCheckout = new URLSearchParams(location.search).get('single') === 'true';
-// const checkoutItems = isSingleProductCheckout ? cartItems.slice(-1) : cartItems;

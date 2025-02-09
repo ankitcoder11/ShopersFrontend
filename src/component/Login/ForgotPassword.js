@@ -3,7 +3,6 @@ import toast from 'react-hot-toast';
 import { CiMail } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 import InputLoginComponent from '../LoginInputs/InputLoginComponent';
-import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import { forgotPassword } from '../../api/users';
 import LargeButton from '../../utiles/LargeButton';
 
@@ -47,7 +46,6 @@ const ForgotPassword = () => {
                 <InputLoginComponent icon={<CiMail />} placeholder={'Enter your email'} name={'email'} value={email} changeHandler={handleChange} />
                 {!isValid && <p className='absolute text-[10px] bottom-[-15px] text-red-400'> Please enter a valid email.</p>}
             </div>
-            {/* <LoginButtonComponent buttonText="Send reset link" handler={handleSubmit} loader={loading} bg="black" /> */}
             <LargeButton text="Send" onClick={handleSubmit} isLoading={loading} />
         </form>
     );

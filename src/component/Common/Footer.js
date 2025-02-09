@@ -14,7 +14,7 @@ const Footer = () => {
         { title: 'RECENT POSTS', list: [{ name: 'A practical guide to watches', path: '/blogs/news/a-practical-guide-to-watches' }, { name: 'Millionaires of the 21st Century', path: '/blogs/news/78257667-watches-of-monaco' }, { name: 'What to Get That Special September Someone', path: '/blogs/news/78257155-watches-of-wall-street' }] }
     ]
     return (
-        <div className='p-[50px] pb-[20px] flex flex-col h-[150px] justify-between text-[14px] font-bodyFont text-textColour'>
+        <div className='p-[50px] max-[500px]:p-[20px] pb-[20px] flex flex-col h-[150px] justify-between text-[14px] font-bodyFont text-textColour'>
             {/* <div className='flex justify-between'>
                 {
                     footerData.map((obj, index) => {
@@ -53,7 +53,7 @@ const Footer = () => {
                     </div>
                     <div><p>© 2024 Soppers adda • Powered by Ankit</p></div>
                 </div>
-                <div className='flex gap-[15px]'>
+                <div className='flex gap-[15px] flex-wrap'>
                     <VISA />
                     <MASTER />
                     <AMERICAN />

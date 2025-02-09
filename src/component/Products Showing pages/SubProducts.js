@@ -34,7 +34,7 @@ const SubProducts = () => {
   return (
     <>
       {isLoading ? <Loader /> :
-        <div className='flex w-[95%] gap-[20px] flex-wrap mx-auto py-[20px] '>
+        <div className='flex w-[95%] gap-[15px] flex-wrap mx-auto py-[20px] '>
           {filterData?.map((item, index) => {
             return (
               <SingleProduct key={index} index={index} data={item} />

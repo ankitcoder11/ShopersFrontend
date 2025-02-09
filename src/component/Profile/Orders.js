@@ -41,8 +41,8 @@ const Orders = () => {
                 : <>{orders?.map((order, index) => {
                     return (
                         <div className='border rounded-[8px]' key={index}>
-                            <div className='text-[#565959] text-[14px] flex justify-between items-center py-[18px] px-[14px] bg-[#f0f2f2] '>
-                                <div className='flex gap-[30px]'>
+                            <div className='text-[#565959] text-[14px] flex max-[600px]:flex-col gap-[15px] justify-between items-center py-[18px] px-[14px] bg-[#f0f2f2] '>
+                                <div className='flex gap-[30px] max-[600px]:hidden'>
                                     <div>
                                         <div className='text-[12px]'>ORDER PLACED</div>
                                         <div>{new Date(order.createdAt).toLocaleDateString()}</div>
@@ -58,6 +58,28 @@ const Orders = () => {
                                     <div>
                                         <div className='text-[12px]'>PAYMENT STATUS</div>
                                         <div>{order?.paymentStatus}</div>
+                                    </div>
+                                </div>
+                                <div className='flex gap-[10px] flex-col min-[601px]:hidden w-full'>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            <div className='text-[12px]'>ORDER PLACED</div>
+                                            <div>{new Date(order.createdAt).toLocaleDateString()}</div>
+                                        </div>
+                                        <div>
+                                            <div className='text-[12px]'>TOTAL</div>
+                                            <div>₹ {order.totalAmount}.00</div>
+                                        </div>
+                                    </div>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            <div className='text-[12px]'>SHIP TO</div>
+                                            <div>{order.address.fullName}</div>
+                                        </div>
+                                        <div>
+                                            <div className='text-[12px]'>PAYMENT STATUS</div>
+                                            <div>{order?.paymentStatus}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>

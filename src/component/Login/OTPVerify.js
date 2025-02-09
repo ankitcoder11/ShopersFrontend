@@ -65,7 +65,6 @@ const OTPVerify = () => {
                     ))}
                     {error && <p className='absolute text-[10px] bottom-[-15px] text-red-400'>{error}</p>}
                 </div>
-                {/* <LoginButtonComponent buttonText="Verify" handler={handleSubmit} loader={loading} bg="black" /> */}
                 <LargeButton text="Verify" onClick={handleSubmit} isLoading={loading} />
             </form>
         </div>

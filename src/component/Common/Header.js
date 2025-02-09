@@ -8,7 +8,7 @@ import { MyContext } from '../contextApi/MyContext';
 
 const Header = () => {
     const [toSearch, setToSearch] = useState('');
-    const { navBarMenu, setNavBarMenu, setIsSidebarOpen, isSidebarOpen,cartSize } = useContext(MyContext);
+    const { navBarMenu, setNavBarMenu, setIsSidebarOpen, isSidebarOpen, cartSize } = useContext(MyContext);
     return (
         <div className='grid grid-cols-4 w-[94%] mx-auto items-center'>
             <div className='max-[980px]:hidden border flex items-center p-[10px] rounded-[5px] gap-[10px] justify-between'>

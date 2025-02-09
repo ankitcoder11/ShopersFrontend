@@ -248,8 +248,8 @@ const Checkout = () => {
                     <Link to='/protected/cart' className='text-[20px] text-blue-500'><MdOutlineShoppingCart /></Link>
                 </div>
             </div>
-            <div className='w-[90%] mx-auto font-bodyFont flex justify-between'>
-                <div className='flex flex-col w-[45%] pt-[15px] justify-between'>
+            <div className='w-[90%] mx-auto font-bodyFont flex max-[700px]:flex-col max-[700px]:gap-[10px] justify-between'>
+                <div className='flex flex-col gap-[10px] w-[45%] max-[700px]:w-full pt-[15px] justify-between'>
                     <div className='flex justify-between'>
                         <div className='font-semibold'>Delivery address</div>
                         {addressListLoading ? <Loader /> :
@@ -270,7 +270,7 @@ const Checkout = () => {
                     <LargeButton onClick={() => { if (defaultAddress) { handleBuyNow() } }} text="Place Order" isLoading={buyNowLoading} />
                 </div>
                 <div className='border'></div>
-                <div className='w-[45%] flex flex-col gap-[10px] h-[calc(100vh-100px)] p-[15px] overflow-auto '>
+                <div className='w-[45%] max-[700px]:w-full flex flex-col gap-[10px] h-[calc(100vh-100px)] max-[700px]:h-full p-[15px] overflow-auto '>
                     {checkoutItems?.map((item, index) => {
                         return (
                             <div key={index} className='flex justify-between items-center'>

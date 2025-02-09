@@ -10,9 +10,10 @@ const Products = () => {
   const location = useLocation()
   const fullPath = location.pathname;
   const url = fullPath.split('/')
-  
+
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       try {
         const response = await fetchProducts(url[2]);
         setProductsData(response?.data)
@@ -24,7 +25,7 @@ const Products = () => {
     };
 
     fetchData();
-  }, [url]);
+  }, [url[2]]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,7 +33,7 @@ const Products = () => {
   return (
     <>
       {isLoading ? <Loader /> :
-        <div className='flex w-[95%] gap-[20px] flex-wrap mx-auto py-[20px]'>
+        <div className='flex w-[95%] gap-[15px] flex-wrap mx-auto py-[20px]'>
           {productsData?.map((item, index) => {
             return (
               <SingleProduct key={index} index={index} data={item} />

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { CiLock, CiMail, CiMobile1, CiUser } from 'react-icons/ci'
 import InputLoginComponent, { InputPasswordComponent } from '../LoginInputs/InputLoginComponent';
-import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -10,6 +9,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { MyContext } from '../contextApi/MyContext';
 import { loginUsers, registerUsers } from '../../api/users';
 import LargeButton, { ButtonWhite } from '../../utiles/LargeButton';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -135,47 +135,81 @@ const Login = () => {
         return <Navigate to="/" />
     }
     return (
-        <div className=' z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
-            {/* Sign Up Page */}
-            <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[20px] absolute ${ani ? 'animate-formSecondReturn' : 'animate-formSecond'}`}
-                onSubmit={formikSignup.handleSubmit}>
-                <h1 className='font-logoFont text-[30px] text-black'>Create Account</h1>
-                <div className='flex items-center w-full justify-center flex-col gap-[15px]'>
-                    <InputLoginComponent icon={<CiUser />} placeholder={'Full Name'} name={'fullName'} value={formikSignup?.values?.fullName} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.fullName} touched={formikSignup?.touched?.fullName} />
-                    <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikSignup?.values?.email} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.email} touched={formikSignup?.touched?.email} />
-                    <InputLoginComponent icon={<CiMobile1 />} placeholder={'Mobile Number'} name={'mobileNumber'} value={formikSignup?.values?.mobileNumber} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.mobileNumber} touched={formikSignup?.touched?.mobileNumber} />
-                    <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikSignup?.values?.password} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.password} touched={formikSignup?.touched?.password} />
-                    <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Confirm Password'} name={'confirmPassword'} value={formikSignup?.values?.confirmPassword} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.confirmPassword} touched={formikSignup?.touched?.confirmPassword} />
+        <>
+            <div className='max-[620px]:hidden z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
+                {/* Sign Up Page */}
+                <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[20px] absolute ${ani ? 'animate-formSecondReturn' : 'animate-formSecond'}`}
+                    onSubmit={formikSignup.handleSubmit}>
+                    <h1 className='font-logoFont text-[30px] text-black'>Create Account</h1>
+                    <div className='flex items-center w-full justify-center flex-col gap-[15px]'>
+                        <InputLoginComponent icon={<CiUser />} placeholder={'Full Name'} name={'fullName'} value={formikSignup?.values?.fullName} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.fullName} touched={formikSignup?.touched?.fullName} />
+                        <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikSignup?.values?.email} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.email} touched={formikSignup?.touched?.email} />
+                        <InputLoginComponent icon={<CiMobile1 />} placeholder={'Mobile Number'} name={'mobileNumber'} value={formikSignup?.values?.mobileNumber} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.mobileNumber} touched={formikSignup?.touched?.mobileNumber} />
+                        <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikSignup?.values?.password} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.password} touched={formikSignup?.touched?.password} />
+                        <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Confirm Password'} name={'confirmPassword'} value={formikSignup?.values?.confirmPassword} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.confirmPassword} touched={formikSignup?.touched?.confirmPassword} />
+                    </div>
+                    <LargeButton text="Sign Up" onClick={formikSignup.handleSubmit} isLoading={signUpLoading} />
+                </form>
+                <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-[-30%] absolute justify-center ${ani ? 'animate-form' : 'animate-formReturn'}`}>
+                    <h1 className='font-logoFont text-[30px] text-white text-center'>Welcome, Back!</h1>
+                    <p className='w-[60%] font-bodyFont text-white text-[14px] text-center'>To keep connected with us please login with your personal info</p>
+                    <ButtonWhite text="Sign In" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} />
                 </div>
-                {/* <LoginButtonComponent buttonText={'Sign Up'} handler={formikSignup.handleSubmit} loader={signUpLoading} bg={'black'} /> */}
-                <LargeButton text="Sign Up" onClick={formikSignup.handleSubmit} isLoading={signUpLoading} />
-            </form>
-            <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-[-30%] absolute justify-center ${ani ? 'animate-form' : 'animate-formReturn'}`}>
-                <h1 className='font-logoFont text-[30px] text-white'>Welcome, Back!</h1>
-                <p className='w-[60%] font-bodyFont text-white text-[14px] text-center'>To keep connected with us please login with your personal info</p>
-                {/* <LoginButtonComponent buttonText={'Sign In'} handler={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} textColor={'black'} bg={'white'} /> */}
-                <ButtonWhite text="Sign In" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} />
-            </div>
-            {/*Sign in Page */}
-            <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full left-[-50%] gap-[20px] absolute ${ani ? 'animate-formReturn' : 'animate-form'}`}
-                onSubmit={formikLogin.handleSubmit}>
-                <h1 className='font-logoFont text-[30px] text-black'>Sign in to Shopper'sAdda</h1>
-                <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
-                    <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikLogin?.values?.email} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.email} touched={formikLogin?.touched?.email} />
-                    <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikLogin?.values?.password} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.password} touched={formikLogin?.touched?.password} />
+                {/*Sign in Page */}
+                <form className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full left-[-50%] gap-[20px] absolute ${ani ? 'animate-formReturn' : 'animate-form'}`}
+                    onSubmit={formikLogin.handleSubmit}>
+                    <h1 className='font-logoFont text-[30px] text-black text-center'>Sign in to Shopper'sAdda</h1>
+                    <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
+                        <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikLogin?.values?.email} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.email} touched={formikLogin?.touched?.email} />
+                        <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikLogin?.values?.password} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.password} touched={formikLogin?.touched?.password} />
+                    </div>
+                    <Link to={'forgot-password'} className='font-bodyFont text-[12px] border-b'>Forgot your Password?</Link>
+                    <LargeButton text="Sign In" onClick={formikLogin.handleSubmit} isLoading={loginLoading} />
+                </form>
+                <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-0 absolute justify-center ${ani ? 'animate-formSecond' : 'animate-formSecondReturn'}`}>
+                    <h1 className='font-logoFont text-[30px] text-white text-center'>Hellow, Friend!</h1>
+                    <p className='w-1/2 font-bodyFont text-white text-[14px] text-center'>Enter ypur personal details and start journy with us</p>
+                    <ButtonWhite text="Sign Up" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} />
                 </div>
-                <Link to={'forgot-password'} className='font-bodyFont text-[12px] border-b'>Forgot your Password?</Link>
-                {/* <LoginButtonComponent buttonText={'Sign In'} handler={formikLogin.handleSubmit} loader={loginLoading} bg={'black'} /> */}
-                <LargeButton text="Sign In" onClick={formikLogin.handleSubmit} isLoading={loginLoading} />
-            </form>
-            <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-0 absolute justify-center ${ani ? 'animate-formSecond' : 'animate-formSecondReturn'}`}>
-                <h1 className='font-logoFont text-[30px] text-white'>Hellow, Friend!</h1>
-                <p className='w-1/2 font-bodyFont text-white text-[14px] text-center'>Enter ypur personal details and start journy with us</p>
-                {/* <LoginButtonComponent buttonText={'Sign Up'} handler={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} textColor={'black'} bg={'white'} /> */}
-                <ButtonWhite text="Sign Up" className='border-none' onClick={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }} />
+                <div className={`absolute w-1/2 h-full bg-black ${ani ? 'animate-blueSlider' : 'right-[-15%] animate-returnBlueSlider'} `}></div>
             </div>
-            <div className={`absolute w-1/2 h-full bg-black ${ani ? 'animate-blueSlider' : 'right-[-15%] animate-returnBlueSlider'} `}></div>
-        </div>
+            {/* Mobile Screen */}
+            <div className='min-[621px]:hidden z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
+                {/*Sign in Page */}
+                {!ani ?
+                    <>
+                        <div className='absolute flex items-center gap-[10px] p-[5px] bg-black text-white text-[12px] right-0 top-[12px] ' onClick={() => { setAni(!ani); setShowPassword(false); formikLogin.resetForm(); }}>Sign Up<FaArrowRight /></div>
+                        <form className='w-full rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[20px] '
+                            onSubmit={formikLogin.handleSubmit}>
+                            <h1 className='font-logoFont text-[25px] text-black text-center'>Sign in to Shopper'sAdda</h1>
+                            <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
+                                <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikLogin?.values?.email} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.email} touched={formikLogin?.touched?.email} />
+                                <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikLogin?.values?.password} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.password} touched={formikLogin?.touched?.password} />
+                            </div>
+                            <Link to={'forgot-password'} className='font-bodyFont text-[12px] border-b'>Forgot your Password?</Link>
+                            <LargeButton text="Sign In" onClick={formikLogin.handleSubmit} isLoading={loginLoading} />
+                        </form>
+                    </>
+                    :
+                    <>
+                        {/* Sign Up */}
+                        <div className='absolute flex items-center gap-[10px] p-[5px] bg-black text-white text-[12px] left-0 top-[12px] ' onClick={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }}>Sign In<FaArrowLeft /></div>
+                        <form className={`w-full rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[10px]`}
+                            onSubmit={formikSignup.handleSubmit}>
+                            <h1 className='font-logoFont text-[25px] leading-[15px] text-black'>Create Account</h1>
+                            <div className='flex items-center w-full justify-center flex-col gap-[12px]'>
+                                <InputLoginComponent icon={<CiUser />} placeholder={'Full Name'} name={'fullName'} value={formikSignup?.values?.fullName} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.fullName} touched={formikSignup?.touched?.fullName} />
+                                <InputLoginComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikSignup?.values?.email} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.email} touched={formikSignup?.touched?.email} />
+                                <InputLoginComponent icon={<CiMobile1 />} placeholder={'Mobile Number'} name={'mobileNumber'} value={formikSignup?.values?.mobileNumber} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.mobileNumber} touched={formikSignup?.touched?.mobileNumber} />
+                                <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikSignup?.values?.password} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.password} touched={formikSignup?.touched?.password} />
+                                <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Confirm Password'} name={'confirmPassword'} value={formikSignup?.values?.confirmPassword} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.confirmPassword} touched={formikSignup?.touched?.confirmPassword} />
+                            </div>
+                            <LargeButton text="Sign Up" onClick={formikSignup.handleSubmit} isLoading={signUpLoading} />
+                        </form>
+                    </>
+                }
+            </div>
+        </>
     )
 }
 

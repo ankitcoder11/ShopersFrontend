@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { MdDelete, MdKeyboardArrowLeft } from 'react-icons/md'
 import { MyContext } from '../contextApi/MyContext'
 import LargeButton from '../../utiles/LargeButton'
@@ -70,7 +70,7 @@ const Cart = () => {
                 <Link to={'/'}>
                     <div className='flex items-center gap-[10px] '>
                         <div className='text-[24px]'><MdKeyboardArrowLeft /></div>
-                        <div>Continue Shopping</div>
+                        <div className='max-[700px]:hidden'>Continue Shopping</div>
                     </div>
                 </Link>
                 <div className='text-[24px] font-semibold'>Cart</div>
@@ -86,27 +86,55 @@ const Cart = () => {
                                 {
                                     cartItems?.map((item, index) => {
                                         return (
-                                            <div key={index} className='flex justify-between py-[10px] items-center border-t font-bodyFont overflow-hidden'>
-                                                <div className='w-[27%] h-[250px]'>
-                                                    <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
-                                                        <img className='w-full h-full object-contain' src={item?.productId?.imageUrl[0]} />
-                                                    </Link>
+                                            <Fragment key={index} >
+                                                <div className='flex max-[750px]:hidden justify-between py-[10px] items-center border-t font-bodyFont overflow-hidden'>
+                                                    <div className='w-[27%] h-[250px]'>
+                                                        <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                            <img className='w-full h-full object-contain' src={item?.productId?.imageUrl[0]} />
+                                                        </Link>
+                                                    </div>
+                                                    <div className='capitalize text-[14px] hover:underline hover:text-blue-500'>
+                                                        <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                            {item?.productId?.name?.length > 40 ? item?.productId?.name?.slice(0, 35) + '...' : item?.productId?.name}
+                                                        </Link>
+                                                    </div>
+                                                    <div>₹ {item?.productId?.price}</div>
+                                                    <div className='flex items-center justify-center flex-col'>
+                                                        <div>Quantity : {item?.quantity}</div>
+                                                        <LargeButton onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }} text="Update Quantity" />
+                                                    </div>
+                                                    <div>₹ {item?.productId?.price * item?.quantity}</div>
+                                                    <div className='h-[250px] text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>
+                                                        {removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}
+                                                    </div>
                                                 </div>
-                                                <div className='capitalize text-[14px] hover:underline hover:text-blue-500'>
-                                                    <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
-                                                        {item?.productId?.name?.length > 40 ? item?.productId?.name?.slice(0, 35) + '...' : item?.productId?.name}
-                                                    </Link>
+
+                                                <div className='min-[751px]:hidden py-[10px] border-t font-bodyFont overflow-hidden'>
+                                                    <div className='flex justify-between'>
+                                                        <div className='w-[27%] aspect-[6/10]'>
+                                                            <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                                <img className='w-full h-full object-cover' src={item?.productId?.imageUrl[0]} />
+                                                            </Link>
+                                                        </div>
+                                                        <div className='capitalize text-[14px] hover:underline hover:text-blue-500'>
+                                                            <Link to={`/products/${item?.productId?.mainCategory}/${item?.productId?.category}/${item?.productId?._id}`}>
+                                                                {item?.productId?.name?.length > 25 ? item?.productId?.name?.slice(0, 22) + '...' : item?.productId?.name}
+                                                            </Link>
+                                                        </div>
+                                                        <div className='text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>
+                                                            {removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex justify-between items-center'>
+                                                        <div>₹ {item?.productId?.price}</div>
+                                                        <div className='flex items-center justify-center flex-col'>
+                                                            <div>Quantity : {item?.quantity}</div>
+                                                            <LargeButton onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }} text="Update Quantity" />
+                                                        </div>
+                                                        <div>₹ {item?.productId?.price * item?.quantity}</div>
+                                                    </div>
                                                 </div>
-                                                <div>₹ {item?.productId?.price}</div>
-                                                <div className='flex items-center justify-center flex-col'>
-                                                    <div>Quantity : {item?.quantity}</div>
-                                                    <LargeButton onClick={() => { setIsModalOpen(true); setproductToUpdateQuantity(item); }} text="Update Quantity" />
-                                                </div>
-                                                <div>₹ {item?.productId?.price * item?.quantity}</div>
-                                                <div className='h-[250px] text-[20px] text-red-500 cursor-pointer' onClick={() => removeCartItems(item, user, index)}>
-                                                    {removeItemLoading.index === index ? (removeItemLoading.value ? <ButtonLoader /> : <MdDelete />) : <MdDelete />}
-                                                </div>
-                                            </div>
+                                            </Fragment>
                                         )
                                     })
                                 }

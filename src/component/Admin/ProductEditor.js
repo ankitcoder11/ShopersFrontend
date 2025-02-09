@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { ImageInputComponent, NumberInputComponent, SelectInputComponent, TextAreaInputComponent, TextInputComponent } from '../../utiles/InputFields';
 import { CiCircleRemove } from 'react-icons/ci';
-import LoginButtonComponent from '../LoginInputs/LoginButtonComponent';
 import * as Yup from 'yup';
 import { fetchProducts, updateProduct } from '../../api/products';
+import LargeButton from '../../utiles/LargeButton';
 
 const formikSchema = Yup.object().shape({
   name: Yup.string().required('Product name is required.'),
@@ -136,67 +136,19 @@ const ProductEditor = () => {
   return (
     <form className="w-full flex flex-col items-center justify-center font-bodyFont py-[10px] gap-[10px]">
       <div className="text-[30px] font-semibold">Edit Product</div>
-      <div className="w-[90%] flex gap-[10px]">
-        <div className="w-[65%] flex flex-col gap-[10px]">
-          <TextInputComponent
-            label="Product Name"
-            placeholder="Product Name"
-            name="name"
-            value={formikForm.values.name}
-            changeHandler={formikForm.handleChange}
-            errors={formikForm.errors.name}
-            touched={formikForm.touched.name}
-          />
-          <TextAreaInputComponent
-            label="Product Description"
-            placeholder="Product Description"
-            name="description"
-            value={formikForm.values.description}
-            changeHandler={formikForm.handleChange}
-            errors={formikForm.errors.description}
-            touched={formikForm.touched.description}
-          />
-          <SelectInputComponent
-            label="Product Category"
-            name="category"
-            options={category}
-            value={formikForm.values.category}
-            changeHandler={formikForm.handleChange}
-            errors={formikForm.errors.category}
-            touched={formikForm.touched.category}
-          />
+      <div className="w-[90%] flex max-[770px]:flex-col gap-[10px]">
+        <div className="w-[65%] max-[770px]:w-full flex flex-col gap-[15px]">
+          <TextInputComponent label="Product Name" placeholder="Product Name" name="name" value={formikForm.values.name} changeHandler={formikForm.handleChange} errors={formikForm.errors.name} touched={formikForm.touched.name} />
+          <TextAreaInputComponent label="Product Description" placeholder="Product Description" name="description" value={formikForm.values.description} changeHandler={formikForm.handleChange} errors={formikForm.errors.description} touched={formikForm.touched.description} />
+          <SelectInputComponent label="Product Category" name="category" options={category} value={formikForm.values.category} changeHandler={formikForm.handleChange} errors={formikForm.errors.category} touched={formikForm.touched.category} />
           <div className="w-full relative">
-            <SelectInputComponent
-              label="Product Sub-Category"
-              name="subcategory"
-              options={subcategory[formikForm.values.category] || []}
-              value={formikForm.values.subcategory}
-              changeHandler={formikForm.handleChange}
-              errors={formikForm.errors.subcategory}
-              touched={formikForm.touched.subcategory}
-            />
+            <SelectInputComponent label="Product Sub-Category" name="subcategory" options={subcategory[formikForm.values.category] || []} value={formikForm.values.subcategory} changeHandler={formikForm.handleChange} errors={formikForm.errors.subcategory} touched={formikForm.touched.subcategory} />
             {!formikForm.values.category && <div className="w-full h-full absolute bg-black top-0 opacity-10"></div>}
           </div>
-          <NumberInputComponent
-            label="Product Stock"
-            placeholder="45"
-            name="stock"
-            value={formikForm.values.stock}
-            changeHandler={formikForm.handleChange}
-            errors={formikForm.errors.stock}
-            touched={formikForm.touched.stock}
-          />
-          <NumberInputComponent
-            label="Product Price"
-            placeholder="899"
-            name="price"
-            value={formikForm.values.price}
-            changeHandler={formikForm.handleChange}
-            errors={formikForm.errors.price}
-            touched={formikForm.touched.price}
-          />
+          <NumberInputComponent label="Product Stock" placeholder="45" name="stock" value={formikForm.values.stock} changeHandler={formikForm.handleChange} errors={formikForm.errors.stock} touched={formikForm.touched.stock} />
+          <NumberInputComponent label="Product Price" placeholder="899" name="price" value={formikForm.values.price} changeHandler={formikForm.handleChange} errors={formikForm.errors.price} touched={formikForm.touched.price} />
         </div>
-        <div className="w-[35%]">
+        <div className="w-[35%] max-[770px]:w-full">
           <div className='w-full flex flex-wrap gap-[10px]'>
             {product?.imageUrl?.map((item, index) => {
               return (
@@ -207,15 +159,7 @@ const ProductEditor = () => {
             })}
           </div>
           <div className='text-[14px] text-red-400 text-center pt-[10px]'>* Your current image will be lost *</div>
-          <ImageInputComponent
-            label="Product Images"
-            setSelectedImages={(files) => {
-              setSelectedImages(files);
-              formikForm.setFieldValue('imageUrl', files);
-            }}
-            errors={formikForm.errors.imageUrl}
-            touched={formikForm.touched.imageUrl}
-          />
+          <ImageInputComponent label="Product Images" setSelectedImages={(files) => { setSelectedImages(files); formikForm.setFieldValue('imageUrl', files); }} errors={formikForm.errors.imageUrl} touched={formikForm.touched.imageUrl} />
           {selectedImages && (
             <div className="flex flex-wrap gap-[5px] pt-[10px] justify-center">
               {selectedImages.map((image, index) => (
@@ -230,12 +174,7 @@ const ProductEditor = () => {
           )}
         </div>
       </div>
-      <LoginButtonComponent
-        buttonText="Update Product"
-        bg="black"
-        loader={loader}
-        handler={formikForm.handleSubmit}
-      />
+      <LargeButton text='Update Product' isLoading={loader} onClick={formikForm.handleSubmit} />
     </form>
   );
 };

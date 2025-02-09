@@ -52,8 +52,8 @@ const LayoutWrapper = ({ children }) => {
 const LoginLayoutWrapper = ({ children }) => {
     return (
         <div className='h-[100vh] relative overflow-hidden bg-gray-100 flex items-center justify-center'>
-            <div className='h-[400px] w-[400px] rounded-full absolute bottom-[-100px] left-[-100px] bg-[#808080]'></div>
-            <div className='w-0 h-0 border-[#808080] border-l-[250px] border-l-transparent border-r-[250px] border-b-[250px] absolute right-[-20px] top-[-20px] rotate-[-5deg]'></div>
+            <div className='h-[400px] max-[550px]:h-[200px] w-[400px] max-[550px]:w-[200px] rounded-full absolute bottom-[-100px] left-[-100px] bg-[#808080]'></div>
+            <div className='w-0 h-0 border-[#808080] border-l-[250px] max-[550px]:border-l-[150px] border-l-transparent border-r-[250px] max-[550px]:border-r-[150px] border-b-[250px] max-[550px]:border-b-[150px] absolute right-[-20px] top-[-20px] rotate-[-5deg]'></div>
             <div className=' z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
                 {children}
             </div>
@@ -134,12 +134,12 @@ const Routing = () => {
 
                 <Route path="/admin/*"
                     element={
-                        <RoleBasedRoute isAuthenticated={isAuthenticated} isAdmin={isAdmin}>
+                        <RoleBasedRoute isAuthenticated={isAuthenticated}>
                             <LayoutWrapper>
                                 <Routes>
                                     <Route path="dashboard" element={<Dashboard />} />
                                     <Route path="createproduct" element={<CreateProducts />} />
-                                    <Route path="products" element={<ProductsAdmin />} />
+                                    {/* <Route path="products" element={<ProductsAdmin />} /> */}
                                     <Route path="products/:category/:subcategory/:product" element={<ProductEditor />} />
                                     <Route path="orders" element={<AdminOrders />} />
                                 </Routes>
